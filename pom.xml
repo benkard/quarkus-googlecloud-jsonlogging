@@ -25,6 +25,7 @@
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
     <quarkus.version>1.13.3.Final</quarkus.version>
+    <spotless-plugin.version>2.10.3</spotless-plugin.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
   </properties>
 
@@ -76,6 +77,26 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless-plugin.version}</version>
+        <configuration>
+          <java>
+            <removeUnusedImports/>
+            <importOrder>
+              <order>java,javax,org,com,de,io,dagger,eu.mulk,</order>
+            </importOrder>
+            <googleJavaFormat>
+              <version>${google.java.format.version}</version>
+              <style>GOOGLE</style>
+            </googleJavaFormat>
+          </java>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
 </project>

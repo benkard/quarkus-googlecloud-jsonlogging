@@ -54,7 +54,10 @@ class GoogleCloudLoggingFormatter extends ExtFormatter {
 
     var sourceLocation =
         new GoogleCloudLogEntry.SourceLocation(
-            logRecord.getSourceFileName(), String.valueOf(logRecord.getSourceLineNumber()), String.format("%s.%s", logRecord.getSourceClassName(), logRecord.getSourceMethodName()));
+            logRecord.getSourceFileName(),
+            String.valueOf(logRecord.getSourceLineNumber()),
+            String.format(
+                "%s.%s", logRecord.getSourceClassName(), logRecord.getSourceMethodName()));
 
     var entry =
         new GoogleCloudLogEntry(
@@ -96,9 +99,7 @@ class GoogleCloudLoggingFormatter extends ExtFormatter {
     return messageStringWriter.toString();
   }
 
-  /**
-   * Computes the Google Cloud Logging severity corresponding to a given {@link Level}.
-   */
+  /** Computes the Google Cloud Logging severity corresponding to a given {@link Level}. */
   private static String severityOf(Level level) {
     if (level.intValue() < 500) {
       return TRACE_LEVEL;
