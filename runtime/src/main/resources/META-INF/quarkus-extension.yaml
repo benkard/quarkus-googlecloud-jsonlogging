@@ -1,0 +1,9 @@
+name: Google Cloud JSON Logging
+description: Logs to standard output in Google-Cloud-compatible JSON format.
+metadata:
+  keywords:
+    - logging
+  categories:
+    - "miscellaneous"
+  status: "preview"
+  # guide: ...
