@@ -17,7 +17,7 @@ import org.jboss.logmanager.ExtLogRecord;
  *
  * @see LogEntry
  */
-class Formatter extends ExtFormatter {
+public class Formatter extends ExtFormatter {
 
   private static final String TRACE_LEVEL = "TRACE";
   private static final String DEBUG_LEVEL = "DEBUG";

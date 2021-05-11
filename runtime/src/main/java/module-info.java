@@ -1,3 +1,5 @@
+import eu.mulk.quarkus.googlecloud.jsonlogging.Formatter;
+
 module quarkus.googlecloud.jsonlogging {
   requires java.logging;
   requires java.json;
@@ -6,4 +8,9 @@ module quarkus.googlecloud.jsonlogging {
   requires smallrye.common.constraint;
 
   exports eu.mulk.quarkus.googlecloud.jsonlogging;
+
+  provides java.util.logging.Formatter with
+      Formatter;
+  provides org.jboss.logmanager.ExtFormatter with
+      Formatter;
 }
