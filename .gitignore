@@ -3,6 +3,8 @@
 build/
 target/
 
+.envrc
+
 *~
 *.class
 *.iml

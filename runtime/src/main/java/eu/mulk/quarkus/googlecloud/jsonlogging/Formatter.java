@@ -1,11 +1,12 @@
-package eu.mulk.quarkus.observability.googlecloud.jsonlogging;
+package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbException;
 import org.jboss.logmanager.ExtFormatter;
 import org.jboss.logmanager.ExtLogRecord;
 
@@ -14,9 +15,9 @@ import org.jboss.logmanager.ExtLogRecord;
  *
  * <p>Meant to be used in containers running on Google Kubernetes Engine (GKE).
  *
- * @see GoogleCloudLogEntry
+ * @see LogEntry
  */
-class GoogleCloudLoggingFormatter extends ExtFormatter {
+class Formatter extends ExtFormatter {
 
   private static final String TRACE_LEVEL = "TRACE";
   private static final String DEBUG_LEVEL = "DEBUG";
@@ -27,22 +28,16 @@ class GoogleCloudLoggingFormatter extends ExtFormatter {
   private static final String ERROR_EVENT_TYPE =
       "type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent";
 
-  private final Jsonb jsonb;
-
-  GoogleCloudLoggingFormatter(Jsonb jsonb) {
-    this.jsonb = jsonb;
-  }
-
   @Override
   public String format(ExtLogRecord logRecord) {
     var message = formatMessageWithStackTrace(logRecord);
 
-    var parameters = new HashMap<String, Object>();
-    var labels = new HashMap<String, String>();
+    List<StructuredParameter> parameters = new ArrayList<>();
+    Map<String, String> labels = new HashMap<>();
     if (logRecord.getParameters() != null) {
       for (var parameter : logRecord.getParameters()) {
-        if (parameter instanceof KeyValueParameter kvparam) {
-          parameters.put(kvparam.key(), kvparam.value());
+        if (parameter instanceof StructuredParameter sparam) {
+          parameters.add(sparam);
         } else if (parameter instanceof Label label) {
           labels.put(label.key(), label.value());
         }
@@ -53,32 +48,27 @@ class GoogleCloudLoggingFormatter extends ExtFormatter {
     var ndc = logRecord.getNdc();
 
     var sourceLocation =
-        new GoogleCloudLogEntry.SourceLocation(
+        new LogEntry.SourceLocation(
             logRecord.getSourceFileName(),
             String.valueOf(logRecord.getSourceLineNumber()),
             String.format(
                 "%s.%s", logRecord.getSourceClassName(), logRecord.getSourceMethodName()));
 
     var entry =
-        new GoogleCloudLogEntry(
+        new LogEntry(
             message,
             severityOf(logRecord.getLevel()),
-            new GoogleCloudLogEntry.Timestamp(logRecord.getInstant()),
+            new LogEntry.Timestamp(logRecord.getInstant()),
             null,
             null,
             sourceLocation,
-            labels.isEmpty() ? null : labels,
-            parameters.isEmpty() ? null : parameters,
-            mdc.isEmpty() ? null : mdc,
-            ndc.isEmpty() ? null : ndc,
+            labels,
+            parameters,
+            mdc,
+            ndc,
             logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null);
 
-    try {
-      return jsonb.toJson(entry) + "\n";
-    } catch (JsonbException e) {
-      e.printStackTrace();
-      return message + "\n";
-    }
+    return entry.json().build().toString() + "\n";
   }
 
   /**
