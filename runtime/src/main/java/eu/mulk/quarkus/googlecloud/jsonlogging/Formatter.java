@@ -36,9 +36,10 @@ public class Formatter extends ExtFormatter {
     Map<String, String> labels = new HashMap<>();
     if (logRecord.getParameters() != null) {
       for (var parameter : logRecord.getParameters()) {
-        if (parameter instanceof StructuredParameter sparam) {
-          parameters.add(sparam);
-        } else if (parameter instanceof Label label) {
+        if (parameter instanceof StructuredParameter) {
+          parameters.add((StructuredParameter) parameter);
+        } else if (parameter instanceof Label) {
+          var label = (Label) parameter;
           labels.put(label.key(), label.value());
         }
       }

@@ -18,21 +18,56 @@ import javax.json.JsonObjectBuilder;
  * <p>A few of the fields are treated specially by the fluentd instance running in Google Kubernetes
  * Engine. All other fields end up in the jsonPayload field on the Google Cloud Logging side.
  */
-record LogEntry(
-    String message,
-    String severity,
-    Timestamp timestamp,
-    @Nullable String trace,
-    @Nullable String spanId,
-    SourceLocation sourceLocation,
-    Map<String, String> labels,
-    List<StructuredParameter> parameters,
-    Map<String, String> mappedDiagnosticContext,
-    @Nullable String nestedDiagnosticContext,
-    @Nullable String type) {
+final class LogEntry {
 
-  static record SourceLocation(
-      @Nullable String file, @Nullable String line, @Nullable String function) {
+  private final String message;
+  private final String severity;
+  private final Timestamp timestamp;
+  @Nullable private final String trace;
+  @Nullable private final String spanId;
+  private final SourceLocation sourceLocation;
+  private final Map<String, String> labels;
+  private final List<StructuredParameter> parameters;
+  private final Map<String, String> mappedDiagnosticContext;
+  @Nullable private final String nestedDiagnosticContext;
+  @Nullable private final String type;
+
+  LogEntry(
+      String message,
+      String severity,
+      Timestamp timestamp,
+      @Nullable String trace,
+      @Nullable String spanId,
+      SourceLocation sourceLocation,
+      Map<String, String> labels,
+      List<StructuredParameter> parameters,
+      Map<String, String> mappedDiagnosticContext,
+      @Nullable String nestedDiagnosticContext,
+      @Nullable String type) {
+    this.message = message;
+    this.severity = severity;
+    this.timestamp = timestamp;
+    this.trace = trace;
+    this.spanId = spanId;
+    this.sourceLocation = sourceLocation;
+    this.labels = labels;
+    this.parameters = parameters;
+    this.mappedDiagnosticContext = mappedDiagnosticContext;
+    this.nestedDiagnosticContext = nestedDiagnosticContext;
+    this.type = type;
+  }
+
+  static final class SourceLocation {
+
+    @Nullable private final String file;
+    @Nullable private final String line;
+    @Nullable private final String function;
+
+    SourceLocation(@Nullable String file, @Nullable String line, @Nullable String function) {
+      this.file = file;
+      this.line = line;
+      this.function = function;
+    }
 
     JsonObject json() {
       return Json.createObjectBuilder()
@@ -43,7 +78,15 @@ record LogEntry(
     }
   }
 
-  static record Timestamp(long seconds, int nanos) {
+  static final class Timestamp {
+
+    private final long seconds;
+    private final int nanos;
+
+    Timestamp(long seconds, int nanos) {
+      this.seconds = seconds;
+      this.nanos = nanos;
+    }
 
     Timestamp(Instant t) {
       this(t.getEpochSecond(), t.getNano());

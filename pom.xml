@@ -12,6 +12,7 @@
 
   <name>Quarkus Google Cloud JSON Logging Extension - Parent</name>
   <url>https://gerrit.benkard.de/plugins/gitiles/quarkus-googlecloud-jsonlogging</url>
+
   <description>
     A Quarkus extension that logs to standard output in a JSON format
     compatible with Google Cloud Logging.
@@ -46,7 +47,7 @@
 
   <properties>
     <maven.compiler.parameters>true</maven.compiler.parameters>
-    <maven.compiler.release>16</maven.compiler.release>
+    <maven.compiler.release>11</maven.compiler.release>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
