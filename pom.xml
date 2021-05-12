@@ -201,6 +201,9 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <version>${maven-gpg-plugin.version}</version>
+            <configuration>
+              <keyname>code@mulk.eu</keyname>
+            </configuration>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
