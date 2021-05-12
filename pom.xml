@@ -55,7 +55,7 @@
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
     <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
-    <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>
     <spotless-plugin.version>2.11.0</spotless-plugin.version>
