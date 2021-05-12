@@ -9,6 +9,7 @@
     <artifactId>quarkus-googlecloud-jsonlogging-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
+
   <artifactId>quarkus-googlecloud-jsonlogging-deployment</artifactId>
   <name>Quarkus Google Cloud JSON Logging Extension - Deployment</name>
 

@@ -5,10 +5,39 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
-  <artifactId>quarkus-googlecloud-jsonlogging-parent</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+
+  <artifactId>quarkus-googlecloud-jsonlogging-parent</artifactId>
   <packaging>pom</packaging>
+
   <name>Quarkus Google Cloud JSON Logging Extension - Parent</name>
+  <url>https://gerrit.benkard.de/plugins/gitiles/quarkus-googlecloud-jsonlogging</url>
+  <description>
+    A Quarkus extension that logs to standard output in a JSON format
+    compatible with Google Cloud Logging.
+  </description>
+
+  <licenses>
+    <license>
+      <name>GNU Affero General Public License v3.0 or later</name>
+      <url>https://www.gnu.org/licenses/agpl-3.0.html</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Matthias Benkard</name>
+      <email>code@mulk.eu</email>
+      <organization>Matthias Benkard</organization>
+      <organizationUrl>https://matthias.benkard.de</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://gerrit.benkard.de/quarkus-googlecloud-jsonlogging</connection>
+    <developerConnection>scm:git:ssh://gerrit.benkard.de:29418/quarkus-googlecloud-jsonlogging</developerConnection>
+    <url>https://gerrit.benkard.de/plugins/gitiles/quarkus-googlecloud-jsonlogging</url>
+  </scm>
 
   <modules>
     <module>deployment</module>
@@ -24,10 +53,22 @@
 
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
-    <quarkus.version>1.13.3.Final</quarkus.version>
-    <spotless-plugin.version>2.10.3</spotless-plugin.version>
+    <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
+    <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>
+    <spotless-plugin.version>2.11.0</spotless-plugin.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+
+    <quarkus.version>1.13.3.Final</quarkus.version>
   </properties>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <dependencyManagement>
     <dependencies>
@@ -42,13 +83,16 @@
   </dependencyManagement>
 
   <build>
+
     <pluginManagement>
+
       <plugins>
         <plugin>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-maven-plugin</artifactId>
           <version>${quarkus.version}</version>
         </plugin>
+
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${surefire-plugin.version}</version>
@@ -60,6 +104,7 @@
             </systemPropertyVariables>
           </configuration>
         </plugin>
+
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${failsafe-plugin.version}</version>
@@ -71,14 +116,17 @@
             </systemPropertyVariables>
           </configuration>
         </plugin>
+
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${compiler-plugin.version}</version>
         </plugin>
       </plugins>
+
     </pluginManagement>
 
     <plugins>
+
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
@@ -96,7 +144,77 @@
           </java>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>${nexus-staging-plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
+
+  <profiles>
+
+    <profile>
+      <id>release</id>
+
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${maven-source-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven-gpg-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
 
 </project>
