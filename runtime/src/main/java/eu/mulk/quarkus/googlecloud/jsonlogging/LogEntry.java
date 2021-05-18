@@ -70,11 +70,21 @@ final class LogEntry {
     }
 
     JsonObject json() {
-      return Json.createObjectBuilder()
-          .add("file", file)
-          .add("line", line)
-          .add("function", function)
-          .build();
+      var b = Json.createObjectBuilder();
+
+      if (file != null) {
+        b.add("file", file);
+      }
+
+      if (line != null) {
+        b.add("line", line);
+      }
+
+      if (function != null) {
+        b.add("function", function);
+      }
+
+      return b.build();
     }
   }
 
