@@ -3,6 +3,7 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +29,26 @@ public class Formatter extends ExtFormatter {
   private static final String ERROR_EVENT_TYPE =
       "type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent";
 
+  private final List<ParameterProvider> parameterProviders;
+
+  public Formatter(Collection<ParameterProvider> parameterProviders) {
+    this.parameterProviders = List.copyOf(parameterProviders);
+  }
+
   @Override
   public String format(ExtLogRecord logRecord) {
     var message = formatMessageWithStackTrace(logRecord);
 
     List<StructuredParameter> parameters = new ArrayList<>();
     Map<String, String> labels = new HashMap<>();
+
+    for (var parameterProvider : parameterProviders) {
+      var parameter = parameterProvider.get();
+      if (parameter != null) {
+        parameters.add(parameter);
+      }
+    }
+
     if (logRecord.getParameters() != null) {
       for (var parameter : logRecord.getParameters()) {
         if (parameter instanceof StructuredParameter) {
