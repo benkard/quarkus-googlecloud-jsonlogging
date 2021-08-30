@@ -15,8 +15,9 @@ import javax.json.JsonObjectBuilder;
  * href="https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry">LogEntry</a>
  * structure.
  *
- * <p>A few of the fields are treated specially by the fluentd instance running in Google Kubernetes
- * Engine. All other fields end up in the jsonPayload field on the Google Cloud Logging side.
+ * <p>A few of the fields are <a href="https://cloud.google.com/logging/docs/structured-logging">
+ * treated specially</a> by the fluentd instance running in Google Kubernetes Engine. All other
+ * fields end up in the jsonPayload field on the Google Cloud Logging side.
  */
 final class LogEntry {
 
@@ -111,11 +112,11 @@ final class LogEntry {
     var b = Json.createObjectBuilder();
 
     if (trace != null) {
-      b.add("trace", trace);
+      b.add("logging.googleapis.com/trace", trace);
     }
 
     if (spanId != null) {
-      b.add("spanId", spanId);
+      b.add("logging.googleapis.com/spanId", spanId);
     }
 
     if (nestedDiagnosticContext != null && !nestedDiagnosticContext.isEmpty()) {
@@ -123,7 +124,7 @@ final class LogEntry {
     }
 
     if (!labels.isEmpty()) {
-      b.add("labels", jsonOfStringMap(labels));
+      b.add("logging.googleapis.com/labels", jsonOfStringMap(labels));
     }
 
     if (type != null) {
@@ -133,7 +134,7 @@ final class LogEntry {
     return b.add("message", message)
         .add("severity", severity)
         .add("timestamp", timestamp.json())
-        .add("sourceLocation", sourceLocation.json())
+        .add("logging.googleapis.com/sourceLocation", sourceLocation.json())
         .addAll(jsonOfStringMap(mappedDiagnosticContext))
         .addAll(jsonOfParameterMap(parameters));
   }
