@@ -2,6 +2,21 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import java.util.Objects;
 
+/**
+ * A label usable to tag a log message.
+ *
+ * <p>Instances of {@link Label} can be passed as log parameters to the {@code *f} family of logging
+ * functions on {@link org.jboss.logging.Logger}.
+ *
+ * <p>Example:
+ *
+ * <pre>{@code
+ * logger.logf("Request rejected: unauthorized.", Label.of("requestId", "123"));
+ * }</pre>
+ *
+ * @see KeyValueParameter
+ * @see StructuredParameter
+ */
 public final class Label {
 
   private final String key;

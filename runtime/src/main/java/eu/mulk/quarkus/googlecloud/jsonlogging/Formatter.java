@@ -29,10 +29,14 @@ public class Formatter extends ExtFormatter {
   private static final String ERROR_EVENT_TYPE =
       "type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent";
 
-  private final List<ParameterProvider> parameterProviders;
+  private final List<StructuredParameterProvider> parameterProviders;
+  private final List<LabelProvider> labelProviders;
 
-  public Formatter(Collection<ParameterProvider> parameterProviders) {
+  public Formatter(
+      Collection<StructuredParameterProvider> parameterProviders,
+      Collection<LabelProvider> labelProviders) {
     this.parameterProviders = List.copyOf(parameterProviders);
+    this.labelProviders = List.copyOf(labelProviders);
   }
 
   @Override
@@ -43,9 +47,18 @@ public class Formatter extends ExtFormatter {
     Map<String, String> labels = new HashMap<>();
 
     for (var parameterProvider : parameterProviders) {
-      var parameter = parameterProvider.get();
+      var parameter = parameterProvider.getParameter();
       if (parameter != null) {
         parameters.add(parameter);
+      }
+    }
+
+    for (var labelProvider : labelProviders) {
+      var providedLabels = labelProvider.getLabels();
+      if (providedLabels != null) {
+        for (var label : providedLabels) {
+          labels.put(label.key(), label.value());
+        }
       }
     }
 

@@ -7,6 +7,22 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+/**
+ * A simple single key--value pair forming a {@link StructuredParameter}.
+ *
+ * <p>This class is suitable for the common case of logging a key—value pair as parameter to the
+ * {@code *f} family of logging functions on {@link org.jboss.logging.Logger}. For advanced use
+ * cases, provide your own implementation of {@link StructuredParameter}.
+ *
+ * <p>Example:
+ *
+ * <pre>{@code
+ * logger.infof("Application starting.", StructuredParameter.of("version", "1.0"));
+ * }</pre>
+ *
+ * @see Label
+ * @see StructuredParameter
+ */
 public final class KeyValueParameter implements StructuredParameter {
 
   private final String key;
