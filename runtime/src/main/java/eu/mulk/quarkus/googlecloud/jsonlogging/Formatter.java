@@ -32,6 +32,12 @@ public class Formatter extends ExtFormatter {
   private final List<StructuredParameterProvider> parameterProviders;
   private final List<LabelProvider> labelProviders;
 
+  /**
+   * Constructs a {@link Formatter}.
+   *
+   * @param parameterProviders the {@link StructuredParameterProvider}s to apply to each log entry.
+   * @param labelProviders the {@link LabelProvider}s to apply to each log entry.
+   */
   public Formatter(
       Collection<StructuredParameterProvider> parameterProviders,
       Collection<LabelProvider> labelProviders) {

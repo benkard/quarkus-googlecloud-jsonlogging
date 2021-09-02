@@ -23,10 +23,12 @@ import javax.json.JsonObjectBuilder;
 public interface StructuredParameter {
 
   /**
-   * The JSON to be embedded in the log entry.
+   * The JSON to be embedded in the payload of the log entry.
    *
    * <p>May contain multiple keys and values as well as nested objects. Each top-level entry of the
-   * returned object is embedded as a top-level entry in the log entry.
+   * returned object is embedded as a top-level entry in the payload of the log entry.
+   *
+   * @return A {@link JsonObjectBuilder} holding a set of key–value pairs.
    */
   JsonObjectBuilder json();
 }

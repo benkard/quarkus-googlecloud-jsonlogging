@@ -8,10 +8,21 @@ import java.util.Objects;
  * <p>Instances of {@link Label} can be passed as log parameters to the {@code *f} family of logging
  * functions on {@link org.jboss.logging.Logger}.
  *
- * <p>Example:
+ * <p><strong>Example:</strong>
  *
  * <pre>{@code
  * logger.logf("Request rejected: unauthorized.", Label.of("requestId", "123"));
+ * }</pre>
+ *
+ * Result:
+ *
+ * <pre>{@code
+ * {
+ *   "textPayload": "Request rejected: unauthorized.",
+ *   "labels": {
+ *     "requestId": "123"
+ *   }
+ * }
  * }</pre>
  *
  * @see KeyValueParameter
@@ -27,14 +38,37 @@ public final class Label {
     this.value = value;
   }
 
+  /**
+   * Constructs a {@link Label} from a key (i.e. name) and a value.
+   *
+   * <p>It is often useful for the key to be a {@link String} constant that is shared by multiple
+   * parts of the program.
+   *
+   * @param key the key (name) of the label.
+   * @param value the value of the label.
+   * @return the newly constructed {@link Label}, ready to be passed to a logging function.
+   */
   public static Label of(String key, String value) {
     return new Label(key, value);
   }
 
+  /**
+   * The name of the label.
+   *
+   * <p>It is often useful for this to be a {@link String} constant that is shared by multiple parts
+   * of the program.
+   *
+   * @return the name of the label.
+   */
   public String key() {
     return key;
   }
 
+  /**
+   * The value of the label.
+   *
+   * @return the value of the label.
+   */
   public String value() {
     return value;
   }
