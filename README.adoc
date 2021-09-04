@@ -29,15 +29,6 @@ It is possible to log unstructured text, structured data, or a mixture
 of both depending on the situation.
 
 
-
-To run the application with live reloading enabled:
-
-[source,console]
-----
-$ ./mvnw quarkus:dev
-----
-
-
 == Activation
 
 Add the runtime POM to your dependency list. As long as the JAR is on
