@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
-  <version>3.1.2-SNAPSHOT</version>
+  <version>3.1.2</version>
 
   <artifactId>quarkus-googlecloud-jsonlogging-parent</artifactId>
   <packaging>pom</packaging>
