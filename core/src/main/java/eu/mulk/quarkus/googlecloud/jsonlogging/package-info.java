@@ -17,17 +17,17 @@
  * <p>It is possible to log unstructured text, structured data, or a mixture of both depending on
  * the situation.
  *
- * <h2 id="sect-activation">Activation</h2>
+ * <h2 id="sect-activation">Installation</h2>
  *
  * <ul>
- *   <li><a href="#sect-activation-maven">Activation with Maven</a>
- *   <li><a href="#sect-activation-gradle">Activation with Gradle</a>
+ *   <li><a href="#sect-installation-maven">Installation with Maven</a>
+ *   <li><a href="#sect-installation-gradle">Installation with Gradle</a>
  * </ul>
  *
  * <p>Add the runtime POM to your dependency list. As long as the JAR is on the classpath at both
  * build time and runtime, the log formatter automatically registers itself on startup.
  *
- * <h3 id="sect-activation-maven">Activation with Maven</h3>
+ * <h3 id="sect-installation-maven">Installation with Maven</h3>
  *
  * <pre>{@code
  * <project>
@@ -38,8 +38,8 @@
  *
  *     <dependency>
  *       <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
- *       <artifactId>quarkus-googlecloud-jsonlogging</artifactId>
- *       <version>3.1.0</version>
+ *       <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+ *       <version>4.0.0</version>
  *     </dependency>
  *
  *     ...
@@ -49,13 +49,13 @@
  * </project>
  * }</pre>
  *
- * <h3 id="sect-activation-gradle">Activation with Gradle</h3>
+ * <h3 id="sect-installation-gradle">Installation with Gradle</h3>
  *
  * <pre>{@code
  * dependencies {
  *   ...
  *
- *   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:3.1.0")
+ *   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:4.0.0")
  *
  *   ...
  * }
@@ -117,11 +117,14 @@
  *
  * <h3 id="sect-usage-provider">Using LabelProvider and StructuredParameterProvider</h3>
  *
- * <p>Any CDI beans that implement {@link eu.mulk.quarkus.googlecloud.jsonlogging.LabelProvider}s
- * and {@link eu.mulk.quarkus.googlecloud.jsonlogging.StructuredParameterProvider}s are discovered
- * at build time and consulted to provide labels and parameters for each message that is logged.
- * This can be used to provide contextual information such as tracing and request IDs stored in
- * thread-local storage.
+ * <p>If you pass {@link eu.mulk.quarkus.googlecloud.jsonlogging.LabelProvider}s and {@link
+ * eu.mulk.quarkus.googlecloud.jsonlogging.StructuredParameterProvider}s to {@link
+ * eu.mulk.quarkus.googlecloud.jsonlogging.Formatter}, then they are consulted to provide labels and
+ * parameters for each message that is logged. This can be used to provide contextual information
+ * such as tracing and request IDs stored in thread-local storage.
+ *
+ * <p>If you are using the Quarkus extension, CDI beans that implement these interfaces are
+ * automatically detected at build time and passed to the formatter on startup.
  *
  * <p><strong>Example:</strong>
  *

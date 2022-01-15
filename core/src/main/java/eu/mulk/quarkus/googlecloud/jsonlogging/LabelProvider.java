@@ -5,7 +5,11 @@ import java.util.Collection;
 /**
  * A user-supplied provider for {@link Label}s.
  *
- * <p>Any CDI beans registered under this class are applied to each log entry that is logged.
+ * <p>Instances of this interface that are registered with the {@link Formatter} are applied to each
+ * log entry that is logged.
+ *
+ * <p>If you are using the Quarkus extension, any CDI beans registered under this interface are
+ * registered automatically.
  *
  * <p><strong>Example:</strong>
  *

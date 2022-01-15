@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+    <artifactId>quarkus-googlecloud-jsonlogging-parent</artifactId>
+    <version>3.1.4-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+  <name>Quarkus Google Cloud JSON Logging Extension - JBoss Logging Core</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.logmanager</groupId>
+      <artifactId>jboss-logmanager-embedded</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.smallrye.common</groupId>
+      <artifactId>smallrye-common-constraint</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>jakarta.json</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Automatic-Module-Name>eu.mulk.quarkus.googlecloud.jsonlogging.core</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>

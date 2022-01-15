@@ -15,6 +15,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+      <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
     </dependency>
@@ -63,11 +69,10 @@
 
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>${jar-plugin.version}</version>
         <configuration>
           <archive>
             <manifestEntries>
-              <Automatic-Module-Name>eu.mulk.quarkus.googlecloud.jsonlogging</Automatic-Module-Name>
+              <Automatic-Module-Name>eu.mulk.quarkus.googlecloud.jsonlogging.runtime</Automatic-Module-Name>
             </manifestEntries>
           </archive>
         </configuration>

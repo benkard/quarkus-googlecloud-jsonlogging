@@ -1,6 +1,6 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging.deployment;
 
-import eu.mulk.quarkus.googlecloud.jsonlogging.GoogleCloudJsonLoggingRecorder;
+import eu.mulk.quarkus.googlecloud.jsonlogging.runtime.GoogleCloudJsonLoggingRecorder;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;

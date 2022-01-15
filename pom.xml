@@ -41,6 +41,7 @@
   </scm>
 
   <modules>
+    <module>core</module>
     <module>deployment</module>
     <module>runtime</module>
   </modules>
@@ -54,12 +55,13 @@
 
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
-    <jar-plugin.version>3.2.0</jar-plugin.version>
+    <google-java-format.version>1.13.0</google-java-format.version>
+    <jar-plugin.version>3.2.2</jar-plugin.version>
     <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>
-    <spotless-plugin.version>2.11.0</spotless-plugin.version>
+    <spotless-plugin.version>2.19.0</spotless-plugin.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 
     <quarkus.version>1.13.3.Final</quarkus.version>
@@ -147,7 +149,7 @@
               <order>java,javax,org,com,de,io,dagger,eu.mulk,</order>
             </importOrder>
             <googleJavaFormat>
-              <version>${google.java.format.version}</version>
+              <version>${google-java-format.version}</version>
               <style>GOOGLE</style>
             </googleJavaFormat>
           </java>

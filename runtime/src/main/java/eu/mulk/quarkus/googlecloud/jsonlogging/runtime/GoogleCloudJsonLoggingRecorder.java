@@ -1,5 +1,8 @@
-package eu.mulk.quarkus.googlecloud.jsonlogging;
+package eu.mulk.quarkus.googlecloud.jsonlogging.runtime;
 
+import eu.mulk.quarkus.googlecloud.jsonlogging.Formatter;
+import eu.mulk.quarkus.googlecloud.jsonlogging.LabelProvider;
+import eu.mulk.quarkus.googlecloud.jsonlogging.StructuredParameterProvider;
 import io.quarkus.arc.Arc;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
