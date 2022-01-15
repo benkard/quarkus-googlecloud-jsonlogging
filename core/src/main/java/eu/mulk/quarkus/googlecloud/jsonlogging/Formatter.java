@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import org.jboss.logmanager.ExtFormatter;
 import org.jboss.logmanager.ExtLogRecord;
 
@@ -34,7 +36,7 @@ public class Formatter extends ExtFormatter {
   private final List<LabelProvider> labelProviders;
 
   /**
-   * Constructs a {@link Formatter}.
+   * Constructs a {@link Formatter} with custom configuration.
    *
    * <p><strong>Note:</strong> This constructor does not automatically discover providers using the
    * {@link ServiceLoader} mechanism. See {@link #load} for this case use.
@@ -59,19 +61,31 @@ public class Formatter extends ExtFormatter {
    *
    * @param parameterProviders the {@link StructuredParameterProvider}s to apply to each log entry.
    * @param labelProviders the {@link LabelProvider}s to apply to each log entry.
+   * @return a new formatter.
    */
   public static Formatter load(
       Collection<StructuredParameterProvider> parameterProviders,
       Collection<LabelProvider> labelProviders) {
     parameterProviders = new ArrayList<>(parameterProviders);
-    ServiceLoader.load(StructuredParameterProvider.class, Formatter.class.getClassLoader())
-        .forEach(parameterProviders::add);
+    parameterProviders.addAll(loadStructuredParameterProviders());
 
     labelProviders = new ArrayList<>(labelProviders);
-    ServiceLoader.load(LabelProvider.class, Formatter.class.getClassLoader())
-        .forEach(labelProviders::add);
+    labelProviders.addAll(loadLabelProviders());
 
     return new Formatter(parameterProviders, labelProviders);
+  }
+
+  private static List<StructuredParameterProvider> loadStructuredParameterProviders() {
+    return ServiceLoader.load(StructuredParameterProvider.class, Formatter.class.getClassLoader())
+        .stream()
+        .map(Provider::get)
+        .collect(Collectors.toList());
+  }
+
+  private static List<LabelProvider> loadLabelProviders() {
+    return ServiceLoader.load(LabelProvider.class, Formatter.class.getClassLoader()).stream()
+        .map(Provider::get)
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -4,7 +4,7 @@
  *
  * <ul>
  *   <li><a href="#sect-summary">Summary</a>
- *   <li><a href="#sect-activation">Activation</a>
+ *   <li><a href="#sect-installation">Installation</a>
  *   <li><a href="#sect-usage">Usage</a>
  * </ul>
  *
@@ -17,7 +17,7 @@
  * <p>It is possible to log unstructured text, structured data, or a mixture of both depending on
  * the situation.
  *
- * <h2 id="sect-activation">Installation</h2>
+ * <h2 id="sect-installation">Installation</h2>
  *
  * <ul>
  *   <li><a href="#sect-installation-maven">Installation with Maven</a>

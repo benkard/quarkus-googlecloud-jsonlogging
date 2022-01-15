@@ -32,5 +32,6 @@ public class RootResource {
         Label.of("app", "foo"),
         KeyValueParameter.of("version", 10));
     throw new IllegalStateException();
+    // return "ok";
   }
 }

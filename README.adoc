@@ -29,48 +29,134 @@ It is possible to log unstructured text, structured data, or a mixture
 of both depending on the situation.
 
 
-== Activation
+== Activation (Quarkus)
 
 Add the runtime POM to your dependency list. As long as the JAR is on
 the classpath at both build time and runtime, the log formatter
 automatically registers itself on startup.
 
-
-=== Activation with Maven
+If you are using Maven:
 
 [source,xml]
 ----
-<project>
-  ...
+<dependencies>
 
-  <dependencies>
-    ...
+  <dependency>
+    <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+    <artifactId>quarkus-googlecloud-jsonlogging</artifactId>
+    <version>4.0.0</version>
+  </dependency>
 
-    <dependency>
-      <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
-      <artifactId>quarkus-googlecloud-jsonlogging</artifactId>
-      <version>4.0.0</version>
-    </dependency>
-
-    ...
-  </dependencies>
-
-  ...
-</project>
+</dependencies>
 ----
 
-
-=== Activation with Gradle
+If you are using Gradle:
 
 [source,groovy]
 ----
 dependencies {
-  ...
-
   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:4.0.0")
-
-  ...
 }
+----
+
+
+== Activation (Other Frameworks)
+
+If you are not using Quarkus, you can still make use of the `-core`
+module and wire it into your application in a custom way.  Read this
+section for hints on how to do so.
+
+
+=== Installation
+
+If you are using Maven:
+
+[source,xml]
+----
+<dependencies>
+
+  <dependency>
+    <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+    <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+    <version>4.0.0</version>
+  </dependency>
+
+</dependencies>
+----
+
+If you are using Gradle:
+
+[source,groovy]
+----
+dependencies {
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:4.0.0")
+}
+----
+
+
+=== Wiring (Spring Boot)
+
+If you are using Spring Boot, the easiest way to integrate the log
+formatter is by relying on `spring-boot-starter-logging` (which is
+pulled in by `spring-boot-starter`), excluding Logback, and pulling in
+JBoss Log Manager as the back end for SLF4J:
+
+[source,xml]
+----
+
+<dependencies>
+
+  <dependency>
+    <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+    <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+    <version>4.0.0</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.jboss.slf4j</groupId>
+    <artifactId>slf4j-jboss-logmanager</artifactId>
+    <version>1.1.0.Final</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+    <exclusions>
+      <exclusion>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+      </exclusion>
+    </exclusions>
+  </dependency>
+
+</dependencies>
+----
+
+Create a text file called
+`META-INF/services/org.jboss.logmanager.EmbeddedConfigurator` in your
+`resources` directory and put the fully qualified name of
+`DefaultEmbeddedConfigurator` into it:
+
+[source]
+----
+eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultEmbeddedConfigurator
+----
+
+To configure `java.util.logging`, which is used by Tomcat by default,
+create an entry in `application.properties` that points to
+`logging.properties`:
+
+[source,properties]
+----
+logging.config = classpath:logging.properties
+----
+
+Create the `logging.properties` file in your `resources` directory and
+name `DefaultConsoleHandler` as a handler:
+
+[source,properties]
+----
+handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.ConsoleHandler
 ----
 
 
