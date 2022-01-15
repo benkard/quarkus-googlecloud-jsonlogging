@@ -144,6 +144,10 @@ parameters for each message that is logged.  This can be used to
 provide contextual information such as tracing and request IDs stored
 in thread-local storage.
 
+Alternatively, you can also register providers through the Java
+https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ServiceLoader.html[ServiceLoader]
+mechanism.
+
 **Example:**
 
 [source,java]

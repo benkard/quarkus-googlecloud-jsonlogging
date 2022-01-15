@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 import org.jboss.logmanager.ExtFormatter;
 import org.jboss.logmanager.ExtLogRecord;
@@ -35,6 +36,9 @@ public class Formatter extends ExtFormatter {
   /**
    * Constructs a {@link Formatter}.
    *
+   * <p><strong>Note:</strong> This constructor does not automatically discover providers using the
+   * {@link ServiceLoader} mechanism. See {@link #load} for this case use.
+   *
    * @param parameterProviders the {@link StructuredParameterProvider}s to apply to each log entry.
    * @param labelProviders the {@link LabelProvider}s to apply to each log entry.
    */
@@ -43,6 +47,31 @@ public class Formatter extends ExtFormatter {
       Collection<LabelProvider> labelProviders) {
     this.parameterProviders = List.copyOf(parameterProviders);
     this.labelProviders = List.copyOf(labelProviders);
+  }
+
+  /**
+   * Constructs a {@link Formatter} with parameter and label providers supplied by {@link
+   * ServiceLoader}.
+   *
+   * <p>In addition to the providers supplied as parameters, this factory method loads all {@link
+   * StructuredParameterProvider}s and {@link LabelProvider}s found through the {@link
+   * ServiceLoader} mechanism.
+   *
+   * @param parameterProviders the {@link StructuredParameterProvider}s to apply to each log entry.
+   * @param labelProviders the {@link LabelProvider}s to apply to each log entry.
+   */
+  public static Formatter load(
+      Collection<StructuredParameterProvider> parameterProviders,
+      Collection<LabelProvider> labelProviders) {
+    parameterProviders = new ArrayList<>(parameterProviders);
+    ServiceLoader.load(StructuredParameterProvider.class, Formatter.class.getClassLoader())
+        .forEach(parameterProviders::add);
+
+    labelProviders = new ArrayList<>(labelProviders);
+    ServiceLoader.load(LabelProvider.class, Formatter.class.getClassLoader())
+        .forEach(labelProviders::add);
+
+    return new Formatter(parameterProviders, labelProviders);
   }
 
   @Override

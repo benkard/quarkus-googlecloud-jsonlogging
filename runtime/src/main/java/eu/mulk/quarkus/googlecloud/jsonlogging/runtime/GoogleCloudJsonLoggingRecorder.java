@@ -31,6 +31,6 @@ public class GoogleCloudJsonLoggingRecorder {
     var labelProviders =
         Arc.container().select(LabelProvider.class).stream().collect(Collectors.toList());
 
-    return new RuntimeValue<>(Optional.of(new Formatter(parameterProviders, labelProviders)));
+    return new RuntimeValue<>(Optional.of(Formatter.load(parameterProviders, labelProviders)));
   }
 }

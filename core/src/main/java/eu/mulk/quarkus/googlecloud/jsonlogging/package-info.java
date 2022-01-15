@@ -123,8 +123,14 @@
  * parameters for each message that is logged. This can be used to provide contextual information
  * such as tracing and request IDs stored in thread-local storage.
  *
- * <p>If you are using the Quarkus extension, CDI beans that implement these interfaces are
- * automatically detected at build time and passed to the formatter on startup.
+ * <p><strong>Service provider support:</strong> Providers can be registered using the {@link
+ * java.util.ServiceLoader} mechanism, in which case {@link
+ * eu.mulk.quarkus.googlecloud.jsonlogging.Formatter#load} picks them up automatically.
+ *
+ * <p><strong>CDI support:</strong> If you are using the Quarkus extension, CDI beans that implement
+ * one of the provider interfaces are automatically detected at build time and passed to the
+ * formatter on startup. In addition, providers using the {@link java.util.ServiceLoader} mechanism
+ * are detected and passed to the formatter as well.
  *
  * <p><strong>Example:</strong>
  *
