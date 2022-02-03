@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: © 2021 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+
 /**
  * Provides structured logging to standard output according to the Google Cloud Logging
  * specification.

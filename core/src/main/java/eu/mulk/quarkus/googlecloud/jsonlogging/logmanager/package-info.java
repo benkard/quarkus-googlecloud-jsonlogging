@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: © 2021 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+
 /**
  * Integration with JBoss Log Manager and {@link java.util.logging}.
  *

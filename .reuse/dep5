@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Quarkus Google Cloud JSON Logging
+Upstream-Contact: Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+Source: https://gerrit.benkard.de/plugins/gitiles/quarkus-googlecloud-jsonlogging
+
+Files: examples/spring-boot/src/main/resources/META-INF/services/*
+Copyright: © 2021 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+License: GPL-3.0-or-later
