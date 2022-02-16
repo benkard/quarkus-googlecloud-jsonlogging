@@ -71,7 +71,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <spotless-plugin.version>2.19.0</spotless-plugin.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 
-    <quarkus.version>1.13.3.Final</quarkus.version>
+    <quarkus.version>2.6.1.Final</quarkus.version>
   </properties>
 
   <distributionManagement>
