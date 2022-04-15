@@ -20,20 +20,20 @@ import javax.json.JsonValue;
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * logger.infof("Application starting.", StructuredParameter.of("version", "1.0"));
- * }</pre>
+ * }
  *
- * Result:
+ * <p>Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "jsonPayload": {
  *     "message": "Application starting.",
  *     "version": "1.0"
  *   }
  * }
- * }</pre>
+ * }
  *
  * @see Label
  * @see StructuredParameter

@@ -18,9 +18,9 @@ import org.jboss.logmanager.handlers.ConsoleHandler;
  * java.util.logging.LogManager#readConfiguration(InputStream)}), you can use this handler by
  * setting the following properties:
  *
- * <pre>{@code
+ * {@snippet lang="properties" :
  * handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.ConsoleHandler
- * }</pre>
+ * }
  *
  * <p><strong>Note:</strong> You can use {@code org.slf4j.bridge.SLF4JBridgeHandler} from {@code
  * org.slf4j:jul-to-slf4j} instead if you also have {@code org.jboss.slf4j:slf4j-jboss-logmanager}
@@ -36,15 +36,15 @@ import org.jboss.logmanager.handlers.ConsoleHandler;
  * below), you need to accompany this with an entry in {@code application.properties} that points to
  * your {@code logging.properties} file:
  *
- * <pre>{@code
+ * {@snippet lang="properties" :
  * logging.config = classpath:logging.properties
- * }</pre>
+ * }
  *
  * <p>In order to ensure that Spring Boot chooses {@code JavaLoggingSystem} over other
  * implementations, make sure that no other logging backends are present on the class path. A simple
  * way of doing this is by relying on {@code spring-boot-starter-logging} while excluding Logback:
  *
- * <pre>{@code
+ * {@snippet lang="xml" :
  * <dependency>
  *   <groupId>org.springframework.boot</groupId>
  *   <artifactId>spring-boot-starter</artifactId>
@@ -55,7 +55,7 @@ import org.jboss.logmanager.handlers.ConsoleHandler;
  *     </exclusion>
  *   </exclusions>
  * </dependency>
- * }</pre>
+ * }
  *
  * <p>You will probably want to include at least {@code org.jboss.slf4j:slf4j-jboss-logmanager} as
  * well. In addition, {@code org.slf4j:jcl-over-slf4j}, {@code

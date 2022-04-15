@@ -15,7 +15,7 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * @Singleton
  * @Unremovable
  * public final class TraceLogParameterProvider implements StructuredParameterProvider {
@@ -28,11 +28,11 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
  *     return () -> b;
  *   }
  * }
- * }</pre>
+ * }
  *
  * Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "jsonPayload": {
  *     "message": "Request rejected: unauthorized.",
@@ -40,7 +40,7 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
  *     "spanId": "c7431b14630b633d"
  *   }
  * }
- * }</pre>
+ * }
  *
  * @see LabelProvider
  */

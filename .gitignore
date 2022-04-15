@@ -9,7 +9,9 @@ build/
 target/
 
 .envrc
+.flattened-pom.xml
 
 *~
 *.class
 *.iml
+*.versionsBackup

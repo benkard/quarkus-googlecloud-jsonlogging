@@ -17,7 +17,7 @@ import java.util.Collection;
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * @Singleton
  * @Unremovable
  * public final class RequestIdLabelProvider implements LabelProvider {
@@ -27,18 +27,18 @@ import java.util.Collection;
  *     return List.of(Label.of("requestId", RequestContext.current().getRequestId()));
  *   }
  * }
- * }</pre>
+ * }
  *
- * Result:
+ * <p>Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "textPayload": "Request rejected: unauthorized.",
  *   "labels": {
  *     "requestId": "123"
  *   }
  * }
- * }</pre>
+ * }
  *
  * @see StructuredParameterProvider
  */

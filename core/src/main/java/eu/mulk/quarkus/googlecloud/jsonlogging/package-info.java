@@ -33,7 +33,7 @@
  *
  * <h3 id="sect-installation-maven">Installation with Maven</h3>
  *
- * <pre>{@code
+ * {@snippet lang="xml" :
  * <project>
  *   ...
  *
@@ -51,19 +51,19 @@
  *
  *   ...
  * </project>
- * }</pre>
+ * }
  *
  * <h3 id="sect-installation-gradle">Installation with Gradle</h3>
  *
- * <pre>{@code
+ * {@snippet lang="groovy" :
  * dependencies {
- *   ...
+ *   // ...
  *
  *   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:4.0.0")
  *
- *   ...
+ *   // ...
  * }
- * }</pre>
+ * }
  *
  * <h2 id="sect-usage">Usage</h2>
  *
@@ -94,18 +94,18 @@
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * logger.logf(
  *   "Request rejected: unauthorized.",
  *   Label.of("requestId", "123"),
  *   KeyValueParameter.of("resource", "/users/mulk"),
  *   KeyValueParameter.of("method", "PATCH"),
  *   KeyValueParameter.of("reason", "invalid token"));
- * }</pre>
+ * }
  *
- * Result:
+ * <p>Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "jsonPayload": {
  *     "message": "Request rejected: unauthorized.",
@@ -117,7 +117,7 @@
  *     "requestId": "123"
  *   }
  * }
- * }</pre>
+ * }
  *
  * <h3 id="sect-usage-provider">Using LabelProvider and StructuredParameterProvider</h3>
  *
@@ -138,7 +138,7 @@
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * @Singleton
  * @Unremovable
  * public final class TraceLogParameterProvider implements StructuredParameterProvider, LabelProvider {
@@ -156,11 +156,11 @@
  *     return List.of(Label.of("requestId", "123"));
  *   }
  * }
- * }</pre>
+ * }
  *
  * Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "jsonPayload": {
  *     "message": "Request rejected: unauthorized.",
@@ -171,7 +171,7 @@
  *     "requestId": "123"
  *   }
  * }
- * }</pre>
+ * }
  *
  * <h3 id="sect-usage-mdc">Using the Mapped Diagnostic Context</h3>
  *
@@ -180,15 +180,15 @@
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * MDC.put("resource", "/users/mulk");
  * MDC.put("method", "PATCH");
  * logger.logf("Request rejected: unauthorized.");
- * }</pre>
+ * }
  *
  * Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "jsonPayload": {
  *     "message": "Request rejected: unauthorized.",
@@ -196,6 +196,6 @@
  *     "method": "PATCH"
  *   }
  * }
- * }</pre>
+ * }
  */
 package eu.mulk.quarkus.googlecloud.jsonlogging;

@@ -14,20 +14,20 @@ import java.util.Objects;
  *
  * <p><strong>Example:</strong>
  *
- * <pre>{@code
+ * {@snippet :
  * logger.logf("Request rejected: unauthorized.", Label.of("requestId", "123"));
- * }</pre>
+ * }
  *
- * Result:
+ * <p>Result:
  *
- * <pre>{@code
+ * {@snippet lang="json" :
  * {
  *   "textPayload": "Request rejected: unauthorized.",
  *   "labels": {
  *     "requestId": "123"
  *   }
  * }
- * }</pre>
+ * }
  *
  * @see KeyValueParameter
  * @see StructuredParameter

@@ -33,7 +33,7 @@
  *
  * <h3 id="sect-activation-maven">Activation with Maven</h3>
  *
- * <pre>{@code
+ * {@snippet lang="xml" :
  * <project>
  *   ...
  *
@@ -51,19 +51,19 @@
  *
  *   ...
  * </project>
- * }</pre>
+ * }
  *
  * <h3 id="sect-activation-gradle">Activation with Gradle</h3>
  *
- * <pre>{@code
+ * {@snippet lang="groovy" :
  * dependencies {
- *   ...
+ *   // ...
  *
  *   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:4.0.0")
  *
- *   ...
+ *   // ...
  * }
- * }</pre>
+ * }
  *
  * <h2 id="sect-usage">Usage</h2>
  *

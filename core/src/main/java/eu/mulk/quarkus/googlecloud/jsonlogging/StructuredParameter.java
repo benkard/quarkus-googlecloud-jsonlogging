@@ -14,12 +14,12 @@ import javax.json.JsonObjectBuilder;
  *
  * <p>Example:
  *
- * <pre>{@code
+ * {@snippet :
  * StructuredParameter p1 = ...;
  * StructuredParameter p2 = ...;
  *
  * logger.logf("Something interesting happened.", p1, p2);
- * }</pre>
+ * }
  *
  * @see KeyValueParameter
  * @see Label
