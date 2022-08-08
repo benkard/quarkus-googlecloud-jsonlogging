@@ -6,8 +6,9 @@ package eu.mulk.quarkus.googlecloud.jsonlogging.logmanager;
 
 import eu.mulk.quarkus.googlecloud.jsonlogging.Formatter;
 import java.io.InputStream;
-import java.util.Collections;
 import org.jboss.logmanager.handlers.ConsoleHandler;
+
+import static java.util.Collections.emptyList;
 
 /**
  * A {@link ConsoleHandler} preconfigured with {@link Formatter}.
@@ -67,6 +68,6 @@ public final class DefaultConsoleHandler extends ConsoleHandler {
 
   /** Constructs console handler with a formatter created by {@link Formatter#load}. */
   public DefaultConsoleHandler() {
-    super(Formatter.load(Collections.emptyList(), Collections.emptyList()));
+    super(Formatter.load(emptyList(), emptyList(), emptyList()));
   }
 }

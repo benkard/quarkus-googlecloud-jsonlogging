@@ -37,6 +37,9 @@ public class Formatter extends ExtFormatter {
       "type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent";
 
   private final List<StructuredParameterProvider> parameterProviders;
+
+  private final Collection<ParametrizedStructuredParameterProvider> parametrizedParameterProviders;
+
   private final List<LabelProvider> labelProviders;
 
   /**
@@ -46,12 +49,16 @@ public class Formatter extends ExtFormatter {
    * {@link ServiceLoader} mechanism. See {@link #load} for this case use.
    *
    * @param parameterProviders the {@link StructuredParameterProvider}s to apply to each log entry.
+   * @param parametrizedParameterProviders the {@link ParametrizedStructuredParameterProvider}s to apply to each log entry.
    * @param labelProviders the {@link LabelProvider}s to apply to each log entry.
    */
   public Formatter(
       Collection<StructuredParameterProvider> parameterProviders,
-      Collection<LabelProvider> labelProviders) {
+      Collection<ParametrizedStructuredParameterProvider> parametrizedParameterProviders,
+      Collection<LabelProvider> labelProviders
+  ) {
     this.parameterProviders = List.copyOf(parameterProviders);
+    this.parametrizedParameterProviders = List.copyOf(parametrizedParameterProviders);
     this.labelProviders = List.copyOf(labelProviders);
   }
 
@@ -64,19 +71,25 @@ public class Formatter extends ExtFormatter {
    * ServiceLoader} mechanism.
    *
    * @param parameterProviders the {@link StructuredParameterProvider}s to apply to each log entry.
+   * @param parametrizedParameterProviders the {@link ParametrizedStructuredParameterProvider}s to apply to each log entry.
    * @param labelProviders the {@link LabelProvider}s to apply to each log entry.
    * @return a new formatter.
    */
   public static Formatter load(
       Collection<StructuredParameterProvider> parameterProviders,
-      Collection<LabelProvider> labelProviders) {
+      Collection<ParametrizedStructuredParameterProvider> parametrizedParameterProviders,
+      Collection<LabelProvider> labelProviders
+  ) {
     parameterProviders = new ArrayList<>(parameterProviders);
     parameterProviders.addAll(loadStructuredParameterProviders());
+
+    parametrizedParameterProviders = new ArrayList<>(parametrizedParameterProviders);
+    parametrizedParameterProviders.addAll(loadParametrizedStructuredParameterProviders());
 
     labelProviders = new ArrayList<>(labelProviders);
     labelProviders.addAll(loadLabelProviders());
 
-    return new Formatter(parameterProviders, labelProviders);
+    return new Formatter(parameterProviders,parametrizedParameterProviders, labelProviders);
   }
 
   private static List<StructuredParameterProvider> loadStructuredParameterProviders() {
@@ -84,6 +97,13 @@ public class Formatter extends ExtFormatter {
         .stream()
         .map(Provider::get)
         .collect(Collectors.toList());
+  }
+
+  private static List<ParametrizedStructuredParameterProvider> loadParametrizedStructuredParameterProviders() {
+    return ServiceLoader.load(ParametrizedStructuredParameterProvider.class, Formatter.class.getClassLoader())
+            .stream()
+            .map(Provider::get)
+            .collect(Collectors.toList());
   }
 
   private static List<LabelProvider> loadLabelProviders() {
@@ -101,6 +121,13 @@ public class Formatter extends ExtFormatter {
 
     for (var parameterProvider : parameterProviders) {
       var parameter = parameterProvider.getParameter();
+      if (parameter != null) {
+        parameters.add(parameter);
+      }
+    }
+
+    for (var parameterProvider : parametrizedParameterProviders) {
+      var parameter = parameterProvider.getParameter(logRecord);
       if (parameter != null) {
         parameters.add(parameter);
       }
