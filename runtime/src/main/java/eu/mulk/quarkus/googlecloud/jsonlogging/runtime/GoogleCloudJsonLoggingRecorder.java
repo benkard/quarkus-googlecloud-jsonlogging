@@ -10,6 +10,7 @@ import eu.mulk.quarkus.googlecloud.jsonlogging.StructuredParameterProvider;
 import io.quarkus.arc.Arc;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,7 +27,10 @@ public class GoogleCloudJsonLoggingRecorder {
    *
    * @return the registered {@link Formatter}.
    */
-  public RuntimeValue<Optional<java.util.logging.Formatter>> initialize() {
+  public RuntimeValue<Optional<java.util.logging.Formatter>> initialize(GoogleJsonLogConfig config) {
+    if(!config.jsonGoogle.enable) {
+      return new RuntimeValue<>(Optional.empty());
+    }
 
     var parameterProviders =
         Arc.container().select(StructuredParameterProvider.class).stream()
@@ -37,4 +41,5 @@ public class GoogleCloudJsonLoggingRecorder {
 
     return new RuntimeValue<>(Optional.of(Formatter.load(parameterProviders, labelProviders)));
   }
+
 }
