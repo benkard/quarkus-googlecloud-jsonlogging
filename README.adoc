@@ -63,6 +63,14 @@ dependencies {
 }
 ----
 
+By default the extension is turned on.  You can turn the extension on
+or off explicitly by configuring the `quarkus.log.console.google` key
+in `application.properties`:
+
+[source,properties]
+----
+quarkus.log.console.google = true
+----
 
 == Activation (Other Frameworks)
 

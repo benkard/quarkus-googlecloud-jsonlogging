@@ -4,8 +4,8 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging.deployment;
 
+import eu.mulk.quarkus.googlecloud.jsonlogging.runtime.GoogleCloudJsonLoggingConfiguration;
 import eu.mulk.quarkus.googlecloud.jsonlogging.runtime.GoogleCloudJsonLoggingRecorder;
-import eu.mulk.quarkus.googlecloud.jsonlogging.runtime.GoogleJsonLogConfig;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
@@ -39,7 +39,8 @@ public class GoogleCloudLoggingProcessor {
    */
   @BuildStep
   @Record(ExecutionTime.RUNTIME_INIT)
-  public LogConsoleFormatBuildItem setUpFormatter(GoogleCloudJsonLoggingRecorder recorder, GoogleJsonLogConfig config) {
-    return new LogConsoleFormatBuildItem(recorder.initialize(config));
+  public LogConsoleFormatBuildItem setUpFormatter(
+      GoogleCloudJsonLoggingRecorder recorder, GoogleCloudJsonLoggingConfiguration configuration) {
+    return new LogConsoleFormatBuildItem(recorder.initialize(configuration));
   }
 }
