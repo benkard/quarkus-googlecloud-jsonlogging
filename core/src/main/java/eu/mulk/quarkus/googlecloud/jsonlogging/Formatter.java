@@ -99,15 +99,17 @@ public class Formatter extends ExtFormatter {
     List<StructuredParameter> parameters = new ArrayList<>();
     Map<String, String> labels = new HashMap<>();
 
+    var providerContext = new ProviderContext(logRecord);
+
     for (var parameterProvider : parameterProviders) {
-      var parameter = parameterProvider.getParameter();
+      var parameter = parameterProvider.getParameter(providerContext);
       if (parameter != null) {
         parameters.add(parameter);
       }
     }
 
     for (var labelProvider : labelProviders) {
-      var providedLabels = labelProvider.getLabels();
+      var providedLabels = labelProvider.getLabels(providerContext);
       if (providedLabels != null) {
         for (var label : providedLabels) {
           labels.put(label.key(), label.value());
@@ -183,6 +185,39 @@ public class Formatter extends ExtFormatter {
       return WARNING_LEVEL;
     } else {
       return ERROR_LEVEL;
+    }
+  }
+
+  /**
+   * An implementation of {@link LabelProvider.Context} and {@link
+   * StructuredParameterProvider.Context}.
+   */
+  private static class ProviderContext
+      implements LabelProvider.Context, StructuredParameterProvider.Context {
+
+    private final String loggerName;
+    private final long sequenceNumber;
+    private final String threadName;
+
+    private ProviderContext(ExtLogRecord logRecord) {
+      loggerName = logRecord.getLoggerName();
+      sequenceNumber = logRecord.getSequenceNumber();
+      threadName = logRecord.getThreadName();
+    }
+
+    @Override
+    public String loggerName() {
+      return loggerName;
+    }
+
+    @Override
+    public long sequenceNumber() {
+      return sequenceNumber;
+    }
+
+    @Override
+    public String threadName() {
+      return threadName;
     }
   }
 }

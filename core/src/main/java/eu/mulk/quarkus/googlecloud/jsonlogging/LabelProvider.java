@@ -47,7 +47,26 @@ public interface LabelProvider {
   /**
    * Provides a collection of {@link Label}s to add to each log entry that is logged.
    *
+   * <p>If {@link #getLabels(Context)} is implemented, this method is ignored.
+   *
+   * @return a collection of {@link Label}s to add to each log entry that is logged.
+   * @see #getLabels(Context)
+   */
+  default Collection<Label> getLabels() {
+    return null;
+  }
+
+  /**
+   * Provides a collection of {@link Label}s to add to each log entry that is logged.
+   *
+   * <p>Delegates to {@link #getLabels()} by default.
+   *
    * @return a collection of {@link Label}s to add to each log entry that is logged.
    */
-  Collection<Label> getLabels();
+  default Collection<Label> getLabels(Context context) {
+    return getLabels();
+  }
+
+  /** Contextual data available to {@link #getLabels(Context)}. */
+  interface Context extends ProviderContext {}
 }
