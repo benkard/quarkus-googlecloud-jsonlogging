@@ -48,7 +48,7 @@ If you are using Maven:
   <dependency>
     <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
     <artifactId>quarkus-googlecloud-jsonlogging</artifactId>
-    <version>4.1.0</version>
+    <version>4.1.1</version>
   </dependency>
 
 </dependencies>
@@ -59,7 +59,7 @@ If you are using Gradle:
 [source,groovy]
 ----
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:4.1.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:4.1.1")
 }
 ----
 
