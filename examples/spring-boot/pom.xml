@@ -22,12 +22,16 @@ SPDX-License-Identifier: GPL-3.0-or-later
   <artifactId>quarkus-googlecloud-jsonlogging-spring-boot-example</artifactId>
   <name>Quarkus Google Cloud JSON Logging Extension - Spring Boot Example</name>
 
+  <properties>
+    <spring-boot.version>2.7.3</spring-boot.version>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.6.2</version>
+        <version>${spring-boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -92,7 +96,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.6.2</version>
+        <version>${spring-boot.version}</version>
       </plugin>
     </plugins>
   </build>
