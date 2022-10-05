@@ -43,7 +43,7 @@
  *     <dependency>
  *       <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
  *       <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
- *       <version>4.0.0</version>
+ *       <version>5.0.0</version>
  *     </dependency>
  *
  *     ...
@@ -59,7 +59,7 @@
  * dependencies {
  *   // ...
  *
- *   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:4.0.0")
+ *   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:5.0.0")
  *
  *   // ...
  * }
