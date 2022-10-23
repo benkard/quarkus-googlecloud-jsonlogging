@@ -168,7 +168,7 @@ name `DefaultConsoleHandler` as a handler:
 
 [source,properties]
 ----
-handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.ConsoleHandler
+handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultConsoleHandler
 ----
 
 

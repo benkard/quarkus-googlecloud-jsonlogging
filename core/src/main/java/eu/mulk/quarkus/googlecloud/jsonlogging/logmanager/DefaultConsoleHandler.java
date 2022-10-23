@@ -19,7 +19,7 @@ import org.jboss.logmanager.handlers.ConsoleHandler;
  * setting the following properties:
  *
  * {@snippet lang="properties" :
- * handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.ConsoleHandler
+ * handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultConsoleHandler
  * }
  *
  * <p><strong>Note:</strong> You can use {@code org.slf4j.bridge.SLF4JBridgeHandler} from {@code
