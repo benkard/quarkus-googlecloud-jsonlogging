@@ -1,0 +1,24 @@
+stages:
+  - check
+
+image: maven:3-openjdk-17
+
+verify:
+  stage: check
+  script:
+    - mvn verify
+
+sast:
+  stage: check
+
+cache:
+  key: $CI_JOB_NAME
+  paths:
+    - .m2/repository
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors"
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
