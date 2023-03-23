@@ -7,9 +7,9 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.JsonValue;
 
 /**
  * A simple single key–value pair forming a {@link StructuredParameter}.

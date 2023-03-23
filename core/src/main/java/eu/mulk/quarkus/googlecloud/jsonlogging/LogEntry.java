@@ -8,9 +8,9 @@ import io.smallrye.common.constraint.Nullable;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 /**
  * A JSON log entry compatible with Google Cloud Logging.
