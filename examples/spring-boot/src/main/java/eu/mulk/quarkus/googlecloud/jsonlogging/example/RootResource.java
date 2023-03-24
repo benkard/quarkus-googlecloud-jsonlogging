@@ -6,7 +6,7 @@ package eu.mulk.quarkus.googlecloud.jsonlogging.example;
 
 import eu.mulk.quarkus.googlecloud.jsonlogging.KeyValueParameter;
 import eu.mulk.quarkus.googlecloud.jsonlogging.Label;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import org.jboss.logging.Logger;
 import org.jboss.logging.MDC;
 import org.springframework.web.bind.annotation.GetMapping;

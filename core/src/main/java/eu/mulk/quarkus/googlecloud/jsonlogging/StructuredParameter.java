@@ -4,7 +4,7 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
-import javax.json.JsonObjectBuilder;
+import jakarta.json.JsonObjectBuilder;
 
 /**
  * A structured parameter usable as logging payload.
