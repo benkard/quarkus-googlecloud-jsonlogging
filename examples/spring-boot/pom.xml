@@ -23,7 +23,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
   <name>Quarkus Google Cloud JSON Logging Extension - Spring Boot Example</name>
 
   <properties>
-    <spring-boot.version>2.7.3</spring-boot.version>
+    <spring-boot.version>3.0.4</spring-boot.version>
   </properties>
 
   <dependencyManagement>
