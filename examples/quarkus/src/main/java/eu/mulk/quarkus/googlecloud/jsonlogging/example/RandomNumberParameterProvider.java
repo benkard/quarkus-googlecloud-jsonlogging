@@ -8,8 +8,8 @@ import eu.mulk.quarkus.googlecloud.jsonlogging.KeyValueParameter;
 import eu.mulk.quarkus.googlecloud.jsonlogging.StructuredParameter;
 import eu.mulk.quarkus.googlecloud.jsonlogging.StructuredParameterProvider;
 import io.quarkus.arc.Unremovable;
+import jakarta.inject.Singleton;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.inject.Singleton;
 
 @Singleton
 @Unremovable
