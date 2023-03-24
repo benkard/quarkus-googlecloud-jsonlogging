@@ -30,8 +30,8 @@ SPDX-License-Identifier: LGPL-3.0-or-later
       <artifactId>smallrye-common-constraint</artifactId>
     </dependency>
     <dependency>
-      <groupId>jakarta.json</groupId>
-      <artifactId>jakarta.json-api</artifactId>
+      <groupId>org.eclipse.parsson</groupId>
+      <artifactId>parsson</artifactId>
     </dependency>
   </dependencies>
 
