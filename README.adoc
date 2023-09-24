@@ -48,7 +48,7 @@ If you are using Maven:
   <dependency>
     <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
     <artifactId>quarkus-googlecloud-jsonlogging</artifactId>
-    <version>6.0.0</version>
+    <version>6.1.0</version>
   </dependency>
 
 </dependencies>
@@ -59,7 +59,7 @@ If you are using Gradle:
 [source,groovy]
 ----
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:6.0.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:6.1.0")
 }
 ----
 
@@ -71,6 +71,7 @@ in `application.properties`:
 ----
 quarkus.log.console.google = true
 ----
+
 
 == Activation (Other Frameworks)
 
@@ -90,7 +91,7 @@ If you are using Maven:
   <dependency>
     <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
     <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
-    <version>6.0.0</version>
+    <version>6.1.0</version>
   </dependency>
 
 </dependencies>
@@ -101,8 +102,66 @@ If you are using Gradle:
 [source,groovy]
 ----
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.0.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
 }
+----
+
+
+=== Wiring (java.util.logging)
+
+This section explains how to use JBoss Log Manager as the log manager
+for `java.util.logging` and how to configure it to use the log
+formatter provided by this library.
+
+Add a dependency on JBoss Log Manager and the `-core` module to your
+project.
+
+If you are using Maven:
+
+[source,xml]
+----
+<dependencies>
+
+  <dependency>
+    <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+    <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+    <version>6.1.0</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.jboss.logmanager</groupId>
+    <artifactId>jboss-logmanager</artifactId>
+    <version>3.0.2.Final</version>
+  </dependency>
+
+</dependencies>
+----
+
+If you are using Gradle:
+
+[source,groovy]
+----
+dependencies {
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
+  implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
+}
+----
+
+Create a text file called `org.jboss.logmanager.ConfiguratorFactory`
+in your `resources/META-INF/services/` directory and put the fully
+qualified name of this library's `DefaultConfiguratorFactory` into it:
+
+[source]
+----
+eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultConfiguratorFactory
+----
+
+Finally, set the `java.util.logging.manager` system property to
+`org.jboss.logmanager.LogManager` when running your application:
+
+[source,shell]
+----
+$ java -Djava.util.logging.manager=org.jboss.logmanager.LogManager ...
 ----
 
 
@@ -111,64 +170,115 @@ dependencies {
 If you are using Spring Boot, the easiest way to integrate the log
 formatter is by relying on `spring-boot-starter-logging` (which is
 pulled in by `spring-boot-starter`), excluding Logback, and pulling in
-JBoss Log Manager as the back end for SLF4J:
+JBoss Log Manager as the back end for SLF4J.  In addition, configure
+JBoss Log Manager as the log manager for `java.util.logging` by
+setting the `java.util.logging.manager` system property to
+`org.jboss.logmanager.LogManager`.
+
+If you are using Maven:
 
 [source,xml]
 ----
+<project>
 
-<dependencies>
+  <dependencies>
 
-  <dependency>
-    <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
-    <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
-    <version>6.0.0</version>
-  </dependency>
+    <dependency>
+      <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
+      <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
+      <version>6.1.0</version>
+    </dependency>
 
-  <dependency>
-    <groupId>org.jboss.slf4j</groupId>
-    <artifactId>slf4j-jboss-logmanager</artifactId>
-    <version>1.1.0.Final</version>
-  </dependency>
+    <dependency>
+      <groupId>org.jboss.slf4j</groupId>
+      <artifactId>slf4j-jboss-logmanager</artifactId>
+      <version>2.0.1.Final</version>
+    </dependency>
 
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter</artifactId>
-    <exclusions>
-      <exclusion>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-      </exclusion>
-    </exclusions>
-  </dependency>
+    <dependency>
+      <groupId>org.jboss.logmanager</groupId>
+      <artifactId>jboss-logmanager</artifactId>
+      <version>3.0.2.Final</version>
+    </dependency>
 
-</dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
+        <configuration>
+          <systemPropertyVariables>
+            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
 ----
 
-Create a text file called
-`META-INF/services/org.jboss.logmanager.EmbeddedConfigurator` in your
-`resources` directory and put the fully qualified name of
-`DefaultEmbeddedConfigurator` into it:
+If you are using Gradle:
+
+[source,groovy]
+----
+configurations {
+    all*.exclude(group: "ch.qos.logback", module: "logback-classic")
+}
+
+dependencies {
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
+  implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
+  implementation("org.jboss.slf4j:slf4j-jboss-logmanager:2.0.1.Final")
+}
+
+tasks.named("bootRun") {
+  systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
+}
+----
+
+Create a text file called `org.jboss.logmanager.ConfiguratorFactory`
+in your `resources/META-INF/services/` directory and put the fully
+qualified name of this library's `DefaultConfiguratorFactory` into it:
 
 [source]
 ----
-eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultEmbeddedConfigurator
+eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultConfiguratorFactory
 ----
 
-To configure `java.util.logging`, which is used by Tomcat by default,
-create an entry in `application.properties` that points to
-`logging.properties`:
+Because Spring Boot configures the system logger with a minimum log
+level of `SEVERE` by default, you may also want to configure the
+logger using a `logging.properties` file.  To do so, first add an
+entry to `application.properties` that points to the file:
 
 [source,properties]
 ----
 logging.config = classpath:logging.properties
 ----
 
-Create the `logging.properties` file in your `resources` directory and
-name `DefaultConsoleHandler` as a handler:
+Finally, create the `logging.properties` file in your `resources`
+directory and set the root logger level to something other than
+`SEVERE`:
 
 [source,properties]
 ----
-handlers = eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultConsoleHandler
+logger.level = INFO
 ----
 
 
@@ -178,28 +288,28 @@ Logging unstructured data requires no code changes. All logs are
 automatically converted to Google-Cloud-Logging-compatible JSON.
 
 Structured data can be logged in one of 3 different ways: by passing
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]s
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]s
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]s
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]s
 as parameters to individual log entries, by supplying
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]s
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]s
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]s,
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]s,
 or by using the Mapped Diagnostic Context.
 
 
 === Using Label and StructuredParameter
 
 Instances of
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]
 can be passed as log parameters to the `*f` family of logging
 functions on JBoss Logging's
 https://docs.jboss.org/jbosslogging/latest/org/jboss/logging/Logger.html[Logger].
 
 Simple key–value pairs are represented by
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/KeyValueParameter.html[KeyValueParameter].
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/KeyValueParameter.html[KeyValueParameter].
 
 **Example:**
 
@@ -234,9 +344,9 @@ Result:
 === Using LabelProvider and StructuredParameterProvider
 
 Any CDI beans that implement
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.0.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]
 are discovered at build time and consulted to provide labels and
 parameters for each message that is logged.  This can be used to
 provide contextual information such as tracing and request IDs stored
