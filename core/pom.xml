@@ -24,7 +24,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <dependency>
       <groupId>org.jboss.logmanager</groupId>
       <artifactId>jboss-logmanager-embedded</artifactId>
-      <version>1.1.1</version>
+      <version>1.2.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.logmanager</groupId>
@@ -35,12 +35,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <dependency>
       <groupId>io.smallrye.common</groupId>
       <artifactId>smallrye-common-constraint</artifactId>
-      <version>2.1.0</version>
+      <version>2.1.2</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.parsson</groupId>
       <artifactId>parsson</artifactId>
-      <version>1.1.2</version>
+      <version>1.1.4</version>
     </dependency>
   </dependencies>
 
