@@ -66,7 +66,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <google-java-format.version>1.15.0</google-java-format.version>
     <jar-plugin.version>3.3.0</jar-plugin.version>
     <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-    <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <nexus-staging-plugin.version>1.6.13</nexus-staging-plugin.version>
     <spotless-plugin.version>2.39.0</spotless-plugin.version>
@@ -244,6 +244,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <configuration>
+                  <legacyMode>true</legacyMode>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -253,7 +256,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
             <artifactId>maven-gpg-plugin</artifactId>
             <version>${maven-gpg-plugin.version}</version>
             <configuration>
-              <keyname>code@mulk.eu</keyname>
+              <keyname>44DD0CEE515E547A0ABAB1D24F2E30DF0A270EFB</keyname>
             </configuration>
             <executions>
               <execution>
