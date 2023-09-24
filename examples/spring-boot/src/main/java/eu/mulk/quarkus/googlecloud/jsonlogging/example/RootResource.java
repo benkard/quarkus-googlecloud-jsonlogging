@@ -10,9 +10,11 @@ import jakarta.annotation.PostConstruct;
 import org.jboss.logging.Logger;
 import org.jboss.logging.MDC;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/")
+@RestController
+@RequestMapping("/")
 public class RootResource {
 
   static final Logger log = Logger.getLogger(RootResource.class);

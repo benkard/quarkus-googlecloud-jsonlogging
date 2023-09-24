@@ -10,7 +10,7 @@ import org.jboss.logmanager.EmbeddedConfigurator;
 import org.jboss.logmanager.handlers.ConsoleHandler;
 
 /**
- * A convenient {@link EmbeddedConfigurator} for JBoss Log Manager.
+ * A convenient {@link EmbeddedConfigurator} for JBoss Log Manager Embedded (1.1.x and earlier).
  *
  * <p>You can register this class through the {@link java.util.ServiceLoader} mechanism as a
  * provider of the {@link EmbeddedConfigurator} interface (under the name of {@code
@@ -25,7 +25,7 @@ public final class DefaultEmbeddedConfigurator implements EmbeddedConfigurator {
    * Constructs a JBoss Log Manager configuration that uses {@link Formatter} and {@link
    * ConsoleHandler} for log output.
    */
-  @SuppressWarnings("java:S2095")
+  @SuppressWarnings({"java:S2095", "resource"})
   public DefaultEmbeddedConfigurator() {
     rootHandlers = new Handler[] {createConsoleHandler()};
   }

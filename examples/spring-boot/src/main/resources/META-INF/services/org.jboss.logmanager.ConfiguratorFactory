@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: © 2023 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# For JBoss Log Manager 3.x (or JBoss Log Manager Embedded 1.2 or later)
+eu.mulk.quarkus.googlecloud.jsonlogging.logmanager.DefaultConfiguratorFactory
