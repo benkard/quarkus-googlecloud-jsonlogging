@@ -202,6 +202,12 @@ If you are using Maven:
     </dependency>
 
     <dependency>
+      <groupId>org.jboss.logmanager</groupId>
+      <artifactId>jboss-logmanager-embedded</artifactId>
+      <version>1.2.0.Final</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
       <exclusions>
@@ -245,6 +251,7 @@ configurations {
 dependencies {
   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
   implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
+  implementation("org.jboss.logmanager:jboss-logmanager-embedded:1.2.0.Final")
   implementation("org.jboss.slf4j:slf4j-jboss-logmanager:2.0.1.Final")
 }
 
@@ -272,15 +279,31 @@ entry to `application.properties` that points to the file:
 logging.config = classpath:logging.properties
 ----
 
-Finally, create the `logging.properties` file in your `resources`
-directory and set the root logger level to something other than
-`SEVERE`:
+Create the `logging.properties` file in your `resources` directory and
+set the root logger level to something other than `SEVERE`:
 
 [source,properties]
 ----
 logger.level = INFO
 ----
 
+Finally, add a `static` block to your Spring Boot application class
+that disables the Tomcat URL stream handler factory, which conflicts
+with the URL stream handler factory registered by the JBoss Modules
+library:
+
+[source,java]
+----
+@SpringBootApplication
+public class Application {
+
+  static {
+    TomcatURLStreamHandlerFactory.disable();
+  }
+
+  // ...
+}
+----
 
 == Usage
 
