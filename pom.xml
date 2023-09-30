@@ -18,7 +18,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
   <packaging>pom</packaging>
 
   <name>Quarkus Google Cloud JSON Logging Extension - Parent</name>
-  <url>https://gerrit.benkard.de/plugins/gitiles/quarkus-googlecloud-jsonlogging</url>
+  <url>https://gitlab.benkard.de/mulk/quarkus-googlecloud-jsonlogging</url>
 
   <description>
     A Quarkus extension that logs to standard output in a JSON format
@@ -42,9 +42,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
   </developers>
 
   <scm>
-    <connection>scm:git:https://gerrit.benkard.de/quarkus-googlecloud-jsonlogging</connection>
+    <connection>scm:git:https://gitlab.benkard.de/mulk/quarkus-googlecloud-jsonlogging.git</connection>
     <developerConnection>scm:git:ssh://gerrit.benkard.de:29418/quarkus-googlecloud-jsonlogging</developerConnection>
-    <url>https://gerrit.benkard.de/plugins/gitiles/quarkus-googlecloud-jsonlogging</url>
+    <url>https://gitlab.benkard.de/mulk/quarkus-googlecloud-jsonlogging</url>
   </scm>
 
   <modules>
