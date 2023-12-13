@@ -70,7 +70,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <nexus-staging-plugin.version>1.6.13</nexus-staging-plugin.version>
     <spotless-plugin.version>2.41.1</spotless-plugin.version>
-    <surefire-plugin.version>3.2.2</surefire-plugin.version>
+    <surefire-plugin.version>3.2.3</surefire-plugin.version>
 
     <quarkus.version>3.6.3</quarkus.version>
   </properties>
