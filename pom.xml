@@ -60,7 +60,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <compiler-plugin.version>3.12.0</compiler-plugin.version>
+    <compiler-plugin.version>3.12.1</compiler-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
     <flatten-plugin.version>1.5.0</flatten-plugin.version>
     <google-java-format.version>1.15.0</google-java-format.version>
