@@ -4,12 +4,12 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Objects;
 import jakarta.json.Json;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * A simple single key–value pair forming a {@link StructuredParameter}.

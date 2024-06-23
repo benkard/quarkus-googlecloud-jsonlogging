@@ -5,12 +5,12 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import io.smallrye.common.constraint.Nullable;
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A JSON log entry compatible with Google Cloud Logging.
