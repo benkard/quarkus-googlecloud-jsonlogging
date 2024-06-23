@@ -5,9 +5,9 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import io.smallrye.common.constraint.Nullable;
-import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
+import jakarta.json.spi.JsonProvider;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -74,8 +74,8 @@ final class LogEntry {
       this.function = function;
     }
 
-    JsonObject json() {
-      var b = Json.createObjectBuilder();
+    JsonObject json(JsonProvider json) {
+      var b = json.createObjectBuilder();
 
       if (file != null) {
         b.add("file", file);
@@ -107,13 +107,13 @@ final class LogEntry {
       this(t.getEpochSecond(), t.getNano());
     }
 
-    JsonObject json() {
-      return Json.createObjectBuilder().add("seconds", seconds).add("nanos", nanos).build();
+    JsonObject json(JsonProvider json) {
+      return json.createObjectBuilder().add("seconds", seconds).add("nanos", nanos).build();
     }
   }
 
-  JsonObjectBuilder json() {
-    var b = Json.createObjectBuilder();
+  JsonObjectBuilder json(JsonProvider json) {
+    var b = json.createObjectBuilder();
 
     if (trace != null) {
       b.add("logging.googleapis.com/trace", trace);
@@ -128,7 +128,7 @@ final class LogEntry {
     }
 
     if (!labels.isEmpty()) {
-      b.add("logging.googleapis.com/labels", jsonOfStringMap(labels));
+      b.add("logging.googleapis.com/labels", jsonOfStringMap(json, labels));
     }
 
     if (type != null) {
@@ -137,24 +137,25 @@ final class LogEntry {
 
     return b.add("message", message)
         .add("severity", severity)
-        .add("timestamp", timestamp.json())
-        .add("logging.googleapis.com/sourceLocation", sourceLocation.json())
-        .addAll(jsonOfStringMap(mappedDiagnosticContext))
-        .addAll(jsonOfParameterMap(parameters));
+        .add("timestamp", timestamp.json(json))
+        .add("logging.googleapis.com/sourceLocation", sourceLocation.json(json))
+        .addAll(jsonOfStringMap(json, mappedDiagnosticContext))
+        .addAll(jsonOfParameterMap(json, parameters));
   }
 
-  private static JsonObjectBuilder jsonOfStringMap(Map<String, String> stringMap) {
+  private JsonObjectBuilder jsonOfStringMap(JsonProvider json, Map<String, String> stringMap) {
     return stringMap.entrySet().stream()
         .reduce(
-            Json.createObjectBuilder(),
+            json.createObjectBuilder(),
             (acc, x) -> acc.add(x.getKey(), x.getValue()),
             JsonObjectBuilder::addAll);
   }
 
-  private static JsonObjectBuilder jsonOfParameterMap(List<StructuredParameter> parameters) {
+  private JsonObjectBuilder jsonOfParameterMap(
+      JsonProvider json, List<StructuredParameter> parameters) {
     return parameters.stream()
         .reduce(
-            Json.createObjectBuilder(),
+            json.createObjectBuilder(),
             (acc, p) -> acc.addAll(p.json()),
             JsonObjectBuilder::addAll);
   }

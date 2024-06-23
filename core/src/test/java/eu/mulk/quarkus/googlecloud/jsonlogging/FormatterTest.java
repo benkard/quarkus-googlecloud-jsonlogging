@@ -2,7 +2,7 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 
-import jakarta.json.Json;
+import jakarta.json.spi.JsonProvider;
 import java.util.Collection;
 import java.util.List;
 import org.jboss.logmanager.ExtLogRecord;
@@ -10,6 +10,8 @@ import org.jboss.logmanager.Level;
 import org.junit.jupiter.api.Test;
 
 class FormatterTest {
+
+  private static final JsonProvider JSON = JsonProvider.provider();
 
   @Test
   void simpleRecord() {
@@ -43,7 +45,7 @@ class FormatterTest {
         new StructuredParameterProvider() {
           @Override
           public StructuredParameter getParameter() {
-            var b = Json.createObjectBuilder();
+            var b = JSON.createObjectBuilder();
             b.add("traceId", "39f9a49a9567a8bd7087b708f8932550");
             b.add("spanId", "c7431b14630b633d");
             return () -> b;
@@ -88,7 +90,7 @@ class FormatterTest {
     logRecord.setParameters(
         new Object[] {
           (StructuredParameter)
-              () -> Json.createObjectBuilder().add("one", 1).add("two", 2.0).add("yes", true),
+              () -> JSON.createObjectBuilder().add("one", 1).add("two", 2.0).add("yes", true),
           Label.of("a", "b")
         });
     return logRecord;
@@ -128,7 +130,7 @@ class FormatterTest {
         new Object[] {
           (StructuredParameter)
               () -> {
-                var b = Json.createObjectBuilder();
+                var b = JSON.createObjectBuilder();
                 for (int i = 0; i < 10; i++) {
                   b.add("int-" + i, i);
                 }
