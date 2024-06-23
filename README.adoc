@@ -48,7 +48,7 @@ If you are using Maven:
   <dependency>
     <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
     <artifactId>quarkus-googlecloud-jsonlogging</artifactId>
-    <version>6.1.0</version>
+    <version>6.2.0</version>
   </dependency>
 
 </dependencies>
@@ -59,7 +59,7 @@ If you are using Gradle:
 [source,groovy]
 ----
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:6.1.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging:6.2.0")
 }
 ----
 
@@ -91,7 +91,7 @@ If you are using Maven:
   <dependency>
     <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
     <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
-    <version>6.1.0</version>
+    <version>6.2.0</version>
   </dependency>
 
 </dependencies>
@@ -102,7 +102,7 @@ If you are using Gradle:
 [source,groovy]
 ----
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.2.0")
 }
 ----
 
@@ -125,7 +125,7 @@ If you are using Maven:
   <dependency>
     <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
     <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
-    <version>6.1.0</version>
+    <version>6.2.0</version>
   </dependency>
 
   <dependency>
@@ -142,7 +142,7 @@ If you are using Gradle:
 [source,groovy]
 ----
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.2.0")
   implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
 }
 ----
@@ -186,7 +186,7 @@ If you are using Maven:
     <dependency>
       <groupId>eu.mulk.quarkus-googlecloud-jsonlogging</groupId>
       <artifactId>quarkus-googlecloud-jsonlogging-core</artifactId>
-      <version>6.1.0</version>
+      <version>6.2.0</version>
     </dependency>
 
     <dependency>
@@ -249,7 +249,7 @@ configurations {
 }
 
 dependencies {
-  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.1.0")
+  implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:6.2.0")
   implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
   implementation("org.jboss.logmanager:jboss-logmanager-embedded:1.2.0.Final")
   implementation("org.jboss.slf4j:slf4j-jboss-logmanager:2.0.1.Final")
@@ -311,28 +311,28 @@ Logging unstructured data requires no code changes. All logs are
 automatically converted to Google-Cloud-Logging-compatible JSON.
 
 Structured data can be logged in one of 3 different ways: by passing
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]s
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]s
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]s
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]s
 as parameters to individual log entries, by supplying
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]s
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]s
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]s,
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]s,
 or by using the Mapped Diagnostic Context.
 
 
 === Using Label and StructuredParameter
 
 Instances of
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/Label.html[Label]
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameter.html[StructuredParameter]
 can be passed as log parameters to the `*f` family of logging
 functions on JBoss Logging's
 https://docs.jboss.org/jbosslogging/latest/org/jboss/logging/Logger.html[Logger].
 
 Simple key–value pairs are represented by
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/KeyValueParameter.html[KeyValueParameter].
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/KeyValueParameter.html[KeyValueParameter].
 
 **Example:**
 
@@ -367,9 +367,9 @@ Result:
 === Using LabelProvider and StructuredParameterProvider
 
 Any CDI beans that implement
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/LabelProvider.html[LabelProvider]
 and
-https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.1.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]
+https://javadocs.dev/eu.mulk.quarkus-googlecloud-jsonlogging/quarkus-googlecloud-jsonlogging-core/6.2.0/eu.mulk.quarkus.googlecloud.jsonlogging.core/eu/mulk/quarkus/googlecloud/jsonlogging/StructuredParameterProvider.html[StructuredParameterProvider]
 are discovered at build time and consulted to provide labels and
 parameters for each message that is logged.  This can be used to
 provide contextual information such as tracing and request IDs stored
