@@ -1,20 +1,19 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
+import static org.junit.jupiter.api.Assertions.assertLinesMatch;
+
 import jakarta.json.Json;
+import java.util.Collection;
+import java.util.List;
 import org.jboss.logmanager.ExtLogRecord;
 import org.jboss.logmanager.Level;
 import org.junit.jupiter.api.Test;
-
-import java.util.Collection;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 
 class FormatterTest {
 
   @Test
   void simpleRecord() {
-    var logRecord = new ExtLogRecord(Level.INFO, "Hello, world!", FormatterTest.class.getName());
+    var logRecord = makeSimpleRecord();
 
     var formatter = new Formatter(List.of(), List.of());
     var formattingResult = formatter.format(logRecord);
@@ -32,6 +31,10 @@ class FormatterTest {
                 + "\\}"
                 + "\\}\n"),
         List.of(formattingResult));
+  }
+
+  static ExtLogRecord makeSimpleRecord() {
+    return new ExtLogRecord(Level.INFO, "Hello, world!", FormatterTest.class.getName());
   }
 
   @Test
@@ -55,13 +58,7 @@ class FormatterTest {
           }
         };
 
-    var logRecord = new ExtLogRecord(Level.INFO, "Hello, world!", FormatterTest.class.getName());
-    logRecord.setParameters(
-        new Object[] {
-          (StructuredParameter)
-              () -> Json.createObjectBuilder().add("one", 1).add("two", 2.0).add("yes", true),
-          Label.of("a", "b")
-        });
+    var logRecord = makeStructuredRecord();
 
     var formatter = new Formatter(List.of(parameterProvider), List.of(labelProvider));
     var formattingResult = formatter.format(logRecord);
@@ -84,5 +81,16 @@ class FormatterTest {
                 + "\"yes\":true"
                 + "\\}\n"),
         List.of(formattingResult));
+  }
+
+  static ExtLogRecord makeStructuredRecord() {
+    var logRecord = makeSimpleRecord();
+    logRecord.setParameters(
+        new Object[] {
+          (StructuredParameter)
+              () -> Json.createObjectBuilder().add("one", 1).add("two", 2.0).add("yes", true),
+          Label.of("a", "b")
+        });
+    return logRecord;
   }
 }
