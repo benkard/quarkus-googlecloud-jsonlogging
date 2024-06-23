@@ -13,12 +13,14 @@ public class FormatterBenchmark {
 
   private ExtLogRecord simpleLogRecord;
   private ExtLogRecord structuredLogRecord;
+  private ExtLogRecord massivelyStructuredLogRecord;
   private Formatter formatter;
 
   @Setup
   public void setup() {
     simpleLogRecord = FormatterTest.makeSimpleRecord();
     structuredLogRecord = FormatterTest.makeStructuredRecord();
+    massivelyStructuredLogRecord = FormatterTest.makeMassivelyStructuredRecord();
     formatter = new Formatter(List.of(), List.of());
   }
 
@@ -30,5 +32,11 @@ public class FormatterBenchmark {
   @Benchmark
   public void structuredLogRecord(Blackhole blackhole) {
     blackhole.consume(formatter.format(structuredLogRecord));
+  }
+
+  @Benchmark
+  public void massivelyStructuredLogRecord(Blackhole blackhole) {
+    var f = formatter.format(massivelyStructuredLogRecord);
+    blackhole.consume(f);
   }
 }
