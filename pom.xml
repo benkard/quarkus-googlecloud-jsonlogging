@@ -64,7 +64,6 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <exec-maven-plugin.version>3.2.0</exec-maven-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
     <flatten-plugin.version>1.6.0</flatten-plugin.version>
-    <google-java-format.version>1.15.0</google-java-format.version>
     <jar-plugin.version>3.4.1</jar-plugin.version>
     <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
@@ -167,7 +166,6 @@ SPDX-License-Identifier: LGPL-3.0-or-later
               <order>java,javax,org,com,de,io,dagger,eu.mulk,</order>
             </importOrder>
             <googleJavaFormat>
-              <version>${google-java-format.version}</version>
               <style>GOOGLE</style>
             </googleJavaFormat>
           </java>
