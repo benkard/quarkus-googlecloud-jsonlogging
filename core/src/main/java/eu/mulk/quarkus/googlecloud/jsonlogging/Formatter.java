@@ -31,8 +31,12 @@ public class Formatter extends ExtFormatter {
   private static final String TRACE_LEVEL = "TRACE";
   private static final String DEBUG_LEVEL = "DEBUG";
   private static final String INFO_LEVEL = "INFO";
+  private static final String NOTICE_LEVEL = "NOTICE";
   private static final String WARNING_LEVEL = "WARNING";
   private static final String ERROR_LEVEL = "ERROR";
+  private static final String CRITICAL_LEVEL = "CRITICAL";
+  private static final String ALERT_LEVEL = "ALERT";
+  private static final String EMERGENCY_LEVEL = "EMERGENCY";
 
   private static final String ERROR_EVENT_TYPE =
       "type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent";
@@ -193,12 +197,20 @@ public class Formatter extends ExtFormatter {
       return TRACE_LEVEL;
     } else if (level.intValue() < 700) {
       return DEBUG_LEVEL;
-    } else if (level.intValue() < 900) {
+    } else if (level.intValue() < 850) {
       return INFO_LEVEL;
+    } else if (level.intValue() < 900) {
+      return NOTICE_LEVEL;
     } else if (level.intValue() < 1000) {
       return WARNING_LEVEL;
-    } else {
+    } else if (level.intValue() < 1100) {
       return ERROR_LEVEL;
+    } else if (level.intValue() < 1200) {
+      return CRITICAL_LEVEL;
+    } else if (level.intValue() < 1300) {
+      return ALERT_LEVEL;
+    } else {
+      return EMERGENCY_LEVEL;
     }
   }
 
