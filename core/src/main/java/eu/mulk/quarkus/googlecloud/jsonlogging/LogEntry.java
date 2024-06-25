@@ -30,7 +30,7 @@ final class LogEntry {
   private final Timestamp timestamp;
   @Nullable private final String trace;
   @Nullable private final String spanId;
-  private final SourceLocation sourceLocation;
+  @Nullable private final SourceLocation sourceLocation;
   private final Map<String, String> labels;
   private final List<StructuredParameter> parameters;
   private final Map<String, String> mappedDiagnosticContext;
@@ -43,7 +43,7 @@ final class LogEntry {
       Timestamp timestamp,
       @Nullable String trace,
       @Nullable String spanId,
-      SourceLocation sourceLocation,
+      @Nullable SourceLocation sourceLocation,
       Map<String, String> labels,
       List<StructuredParameter> parameters,
       Map<String, String> mappedDiagnosticContext,
@@ -135,11 +135,13 @@ final class LogEntry {
       b.add("@type", type);
     }
 
-    return b.add("message", message)
-        .add("severity", severity)
-        .add("timestamp", timestamp.json(json))
-        .add("logging.googleapis.com/sourceLocation", sourceLocation.json(json))
-        .addAll(jsonOfStringMap(json, mappedDiagnosticContext))
+    b.add("message", message).add("severity", severity).add("timestamp", timestamp.json(json));
+
+    if (sourceLocation != null) {
+      b.add("logging.googleapis.com/sourceLocation", sourceLocation.json(json));
+    }
+
+    return b.addAll(jsonOfStringMap(json, mappedDiagnosticContext))
         .addAll(jsonOfParameterMap(json, parameters));
   }
 

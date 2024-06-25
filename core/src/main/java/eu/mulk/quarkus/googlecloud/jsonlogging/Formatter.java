@@ -134,12 +134,7 @@ public class Formatter extends ExtFormatter {
     var mdc = logRecord.getMdcCopy();
     var ndc = logRecord.getNdc();
 
-    var sourceLocation =
-        new LogEntry.SourceLocation(
-            logRecord.getSourceFileName(),
-            String.valueOf(logRecord.getSourceLineNumber()),
-            String.format(
-                "%s.%s", logRecord.getSourceClassName(), logRecord.getSourceMethodName()));
+    var sourceLocation = sourceLocationOf(logRecord);
 
     var entry =
         new LogEntry(
@@ -156,6 +151,22 @@ public class Formatter extends ExtFormatter {
             logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null);
 
     return entry.json(json).build().toString() + "\n";
+  }
+
+  private static LogEntry.SourceLocation sourceLocationOf(ExtLogRecord logRecord) {
+    var sourceFileName = logRecord.getSourceFileName();
+    var sourceLineNumber = logRecord.getSourceLineNumber();
+    var sourceClassName = logRecord.getSourceClassName();
+    var sourceMethodName = logRecord.getSourceMethodName();
+    return (sourceFileName == null
+            && sourceLineNumber <= 0
+            && sourceClassName == null
+            && sourceMethodName == null)
+        ? null
+        : new LogEntry.SourceLocation(
+            sourceFileName,
+            String.valueOf(sourceLineNumber),
+            String.format("%s.%s", sourceClassName, sourceMethodName));
   }
 
   /**
