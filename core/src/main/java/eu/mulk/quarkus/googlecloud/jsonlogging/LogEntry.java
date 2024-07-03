@@ -5,9 +5,8 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import io.smallrye.common.constraint.Nullable;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
-import jakarta.json.spi.JsonProvider;
+import jakarta.json.JsonString;
+import jakarta.json.JsonValue;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -74,22 +73,31 @@ final class LogEntry {
       this.function = function;
     }
 
-    JsonObject json(JsonProvider json) {
-      var b = json.createObjectBuilder();
+    void json(StringBuilder b) {
+      var commaNeeded = false;
 
       if (file != null) {
-        b.add("file", file);
+        b.append("\"file\":");
+        appendEscapedString(b, file);
+        commaNeeded = true;
       }
 
       if (line != null) {
-        b.add("line", line);
+        if (commaNeeded) {
+          b.append(",");
+        }
+        b.append("\"line\":");
+        appendEscapedString(b, line);
+        commaNeeded = true;
       }
 
       if (function != null) {
-        b.add("function", function);
+        if (commaNeeded) {
+          b.append(",");
+        }
+        b.append("\"function\":");
+        appendEscapedString(b, function);
       }
-
-      return b.build();
     }
   }
 
@@ -107,58 +115,192 @@ final class LogEntry {
       this(t.getEpochSecond(), t.getNano());
     }
 
-    JsonObject json(JsonProvider json) {
-      return json.createObjectBuilder().add("seconds", seconds).add("nanos", nanos).build();
+    void json(StringBuilder b) {
+      b.append("\"seconds\":");
+      b.append(seconds);
+      b.append(",\"nanos\":");
+      b.append(nanos);
     }
   }
 
-  JsonObjectBuilder json(JsonProvider json) {
-    var b = json.createObjectBuilder();
-
+  void json(StringBuilder b) {
     if (trace != null) {
-      b.add("logging.googleapis.com/trace", trace);
+      b.append("\"logging.googleapis.com/trace\":");
+      appendEscapedString(b, trace);
+      b.append(",");
     }
 
     if (spanId != null) {
-      b.add("logging.googleapis.com/spanId", spanId);
+      b.append("\"logging.googleapis.com/spanId\":");
+      appendEscapedString(b, spanId);
+      b.append(",");
     }
 
     if (nestedDiagnosticContext != null && !nestedDiagnosticContext.isEmpty()) {
-      b.add("nestedDiagnosticContext", nestedDiagnosticContext);
+      b.append("\"nestedDiagnosticContext\":");
+      appendEscapedString(b, nestedDiagnosticContext);
+      b.append(",");
     }
 
     if (!labels.isEmpty()) {
-      b.add("logging.googleapis.com/labels", jsonOfStringMap(json, labels));
+      b.append("\"logging.googleapis.com/labels\":{");
+
+      var first = true;
+      for (var entry : labels.entrySet()) {
+        if (!first) {
+          b.append(",");
+        } else {
+          first = false;
+        }
+
+        appendEscapedString(b, entry.getKey());
+        b.append(":");
+        appendEscapedString(b, entry.getValue());
+      }
+
+      b.append("},");
+    }
+
+    for (var entry : mappedDiagnosticContext.entrySet()) {
+      appendEscapedString(b, entry.getKey());
+      b.append(":");
+      appendEscapedString(b, entry.getValue());
+      b.append(",");
+    }
+
+    for (var parameter : parameters) {
+      var jsonObject = parameter.json().build();
+      jsonObject.forEach(
+          (key, value) -> {
+            appendEscapedString(b, key);
+            b.append(":");
+            appendJsonObject(b, value);
+            b.append(",");
+          });
     }
 
     if (type != null) {
-      b.add("@type", type);
+      b.append("\"@type\":");
+      appendEscapedString(b, type);
+      b.append(",");
     }
-
-    b.add("message", message).add("severity", severity).add("timestamp", timestamp.json(json));
 
     if (sourceLocation != null) {
-      b.add("logging.googleapis.com/sourceLocation", sourceLocation.json(json));
+      b.append("\"logging.googleapis.com/sourceLocation\":{");
+      sourceLocation.json(b);
+      b.append("},");
     }
 
-    return b.addAll(jsonOfStringMap(json, mappedDiagnosticContext))
-        .addAll(jsonOfParameterMap(json, parameters));
+    b.append("\"message\":");
+    appendEscapedString(b, message);
+
+    b.append(",\"severity\":");
+    appendEscapedString(b, severity);
+
+    b.append(",\"timestamp\":{");
+    timestamp.json(b);
+    b.append("}");
   }
 
-  private JsonObjectBuilder jsonOfStringMap(JsonProvider json, Map<String, String> stringMap) {
-    return stringMap.entrySet().stream()
-        .reduce(
-            json.createObjectBuilder(),
-            (acc, x) -> acc.add(x.getKey(), x.getValue()),
-            JsonObjectBuilder::addAll);
+  private void appendJsonObject(StringBuilder b, JsonValue value) {
+    switch (value.getValueType()) {
+      case ARRAY:
+        b.append("[");
+        var array = value.asJsonArray();
+        for (var i = 0; i < array.size(); i++) {
+          if (i > 0) {
+            b.append(",");
+          }
+          appendJsonObject(b, array.get(i));
+        }
+        b.append("]");
+        break;
+
+      case OBJECT:
+        b.append("{");
+        var object = value.asJsonObject();
+        var first = true;
+        for (var entry : object.entrySet()) {
+          if (!first) {
+            b.append(",");
+          } else {
+            first = false;
+          }
+          appendEscapedString(b, entry.getKey());
+          b.append(":");
+          appendJsonObject(b, entry.getValue());
+        }
+        b.append("}");
+        break;
+
+      case STRING:
+        appendEscapedString(b, ((JsonString) value).getString());
+        break;
+
+      case NUMBER:
+        b.append(value);
+        break;
+
+      case TRUE:
+        b.append("true");
+        break;
+
+      case FALSE:
+        b.append("false");
+        break;
+
+      case NULL:
+        b.append("null");
+        break;
+    }
   }
 
-  private JsonObjectBuilder jsonOfParameterMap(
-      JsonProvider json, List<StructuredParameter> parameters) {
-    return parameters.stream()
-        .reduce(
-            json.createObjectBuilder(),
-            (acc, p) -> acc.addAll(p.json()),
-            JsonObjectBuilder::addAll);
+  private static void appendEscapedString(StringBuilder b, String s) {
+    b.append('"');
+
+    for (var i = 0; i < s.length(); i++) {
+      var c = s.charAt(i);
+
+      switch (c) {
+        case '"':
+          b.append("\\\"");
+          break;
+
+        case '\\':
+          b.append("\\\\");
+          break;
+
+        case '\b':
+          b.append("\\b");
+          break;
+
+        case '\f':
+          b.append("\\f");
+          break;
+
+        case '\n':
+          b.append("\\n");
+          break;
+
+        case '\r':
+          b.append("\\r");
+          break;
+
+        case '\t':
+          b.append("\\t");
+          break;
+
+        default:
+          if (c < 0x20) {
+            b.append("\\u00");
+            b.append(Character.forDigit((c >> 4) & 0xf, 16));
+            b.append(Character.forDigit(c & 0xf, 16));
+          } else {
+            b.append(c);
+          }
+      }
+    }
+
+    b.append('"');
   }
 }

@@ -4,7 +4,6 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
-import jakarta.json.spi.JsonProvider;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class Formatter extends ExtFormatter {
 
   private final List<StructuredParameterProvider> parameterProviders;
   private final List<LabelProvider> labelProviders;
-  private final JsonProvider json;
+  private final ThreadLocal<StringBuilder> stringBuilder;
 
   /**
    * Constructs a {@link Formatter} with custom configuration.
@@ -59,7 +58,7 @@ public class Formatter extends ExtFormatter {
       Collection<LabelProvider> labelProviders) {
     this.parameterProviders = List.copyOf(parameterProviders);
     this.labelProviders = List.copyOf(labelProviders);
-    this.json = JsonProvider.provider();
+    this.stringBuilder = ThreadLocal.withInitial(StringBuilder::new);
   }
 
   /**
@@ -154,7 +153,12 @@ public class Formatter extends ExtFormatter {
             ndc,
             logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null);
 
-    return entry.json(json).build().toString() + "\n";
+    var b = stringBuilder.get();
+    b.delete(0, b.length());
+    b.append("{");
+    entry.json(b);
+    b.append("}\n");
+    return b.toString();
   }
 
   private static LogEntry.SourceLocation sourceLocationOf(ExtLogRecord logRecord) {
