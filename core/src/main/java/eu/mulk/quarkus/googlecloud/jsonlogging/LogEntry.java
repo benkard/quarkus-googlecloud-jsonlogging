@@ -81,7 +81,7 @@ final class LogEntry {
 
       if (file != null) {
         b.append("\"file\":");
-        appendEscapedString(b, file);
+        appendJsonString(b, file);
         commaNeeded = true;
       }
 
@@ -90,7 +90,7 @@ final class LogEntry {
           b.append(",");
         }
         b.append("\"line\":");
-        appendEscapedString(b, line);
+        appendJsonString(b, line);
         commaNeeded = true;
       }
 
@@ -99,7 +99,7 @@ final class LogEntry {
           b.append(",");
         }
         b.append("\"function\":");
-        appendEscapedString(b, function);
+        appendJsonString(b, function);
       }
     }
   }
@@ -130,25 +130,25 @@ final class LogEntry {
 
     if (insertId != null) {
       b.append("\"logging.googleapis.com/insertId\":");
-      appendEscapedString(b, insertId);
+      appendJsonString(b, insertId);
       b.append(",");
     }
 
     if (trace != null) {
       b.append("\"logging.googleapis.com/trace\":");
-      appendEscapedString(b, trace);
+      appendJsonString(b, trace);
       b.append(",");
     }
 
     if (spanId != null) {
       b.append("\"logging.googleapis.com/spanId\":");
-      appendEscapedString(b, spanId);
+      appendJsonString(b, spanId);
       b.append(",");
     }
 
     if (nestedDiagnosticContext != null && !nestedDiagnosticContext.isEmpty()) {
       b.append("\"nestedDiagnosticContext\":");
-      appendEscapedString(b, nestedDiagnosticContext);
+      appendJsonString(b, nestedDiagnosticContext);
       b.append(",");
     }
 
@@ -163,18 +163,18 @@ final class LogEntry {
           first = false;
         }
 
-        appendEscapedString(b, entry.getKey());
+        appendJsonString(b, entry.getKey());
         b.append(":");
-        appendEscapedString(b, entry.getValue());
+        appendJsonString(b, entry.getValue());
       }
 
       b.append("},");
     }
 
     for (var entry : mappedDiagnosticContext.entrySet()) {
-      appendEscapedString(b, entry.getKey());
+      appendJsonString(b, entry.getKey());
       b.append(":");
-      appendEscapedString(b, entry.getValue());
+      appendJsonString(b, entry.getValue());
       b.append(",");
     }
 
@@ -182,7 +182,7 @@ final class LogEntry {
       var jsonObject = parameter.json().build();
       jsonObject.forEach(
           (key, value) -> {
-            appendEscapedString(b, key);
+            appendJsonString(b, key);
             b.append(":");
             appendJsonObject(b, value);
             b.append(",");
@@ -191,7 +191,7 @@ final class LogEntry {
 
     if (type != null) {
       b.append("\"@type\":");
-      appendEscapedString(b, type);
+      appendJsonString(b, type);
       b.append(",");
     }
 
@@ -202,10 +202,10 @@ final class LogEntry {
     }
 
     b.append("\"message\":");
-    appendEscapedString(b, message);
+    appendJsonString(b, message);
 
     b.append(",\"severity\":");
-    appendEscapedString(b, severity);
+    appendJsonString(b, severity);
 
     b.append(",\"timestamp\":{");
     timestamp.json(b);
@@ -236,7 +236,7 @@ final class LogEntry {
           } else {
             first = false;
           }
-          appendEscapedString(b, entry.getKey());
+          appendJsonString(b, entry.getKey());
           b.append(":");
           appendJsonObject(b, entry.getValue());
         }
@@ -244,7 +244,7 @@ final class LogEntry {
         break;
 
       case STRING:
-        appendEscapedString(b, ((JsonString) value).getString());
+        appendJsonString(b, ((JsonString) value).getString());
         break;
 
       case NUMBER:
@@ -265,7 +265,7 @@ final class LogEntry {
     }
   }
 
-  private static void appendEscapedString(StringBuilder b, String s) {
+  private static void appendJsonString(StringBuilder b, String s) {
     b.append('"');
 
     for (var i = 0; i < s.length(); i++) {
