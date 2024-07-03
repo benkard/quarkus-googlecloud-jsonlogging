@@ -67,6 +67,7 @@ class FormatterTest {
     assertLinesMatch(
         List.of(
             "\\{"
+                + "\"logging.googleapis.com/insertId\":\"123-456-789\","
                 + "\"logging.googleapis.com/labels\":\\{\"a\":\"b\",\"requestId\":\"123\"\\},"
                 + "\"traceId\":\"39f9a49a9567a8bd7087b708f8932550\","
                 + "\"spanId\":\"c7431b14630b633d\","
@@ -91,7 +92,8 @@ class FormatterTest {
         new Object[] {
           (StructuredParameter)
               () -> JSON.createObjectBuilder().add("one", 1).add("two", 2.0).add("yes", true),
-          Label.of("a", "b")
+          Label.of("a", "b"),
+          InsertId.of("123-456-789"),
         });
     return logRecord;
   }

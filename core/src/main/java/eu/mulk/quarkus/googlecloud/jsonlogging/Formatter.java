@@ -123,6 +123,8 @@ public class Formatter extends ExtFormatter {
       }
     }
 
+    String insertId = null;
+
     if (logRecord.getParameters() != null) {
       for (var parameter : logRecord.getParameters()) {
         if (parameter instanceof StructuredParameter) {
@@ -130,6 +132,8 @@ public class Formatter extends ExtFormatter {
         } else if (parameter instanceof Label) {
           var label = (Label) parameter;
           labels.put(label.key(), label.value());
+        } else if (parameter instanceof InsertId) {
+          insertId = ((InsertId) parameter).value();
         }
       }
     }
@@ -151,7 +155,8 @@ public class Formatter extends ExtFormatter {
             parameters,
             mdc,
             ndc,
-            logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null);
+            logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null,
+            insertId);
 
     var b = stringBuilder.get();
     b.delete(0, b.length());

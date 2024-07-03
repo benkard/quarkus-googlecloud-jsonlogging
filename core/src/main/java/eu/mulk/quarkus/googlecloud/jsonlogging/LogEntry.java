@@ -35,6 +35,7 @@ final class LogEntry {
   private final Map<String, String> mappedDiagnosticContext;
   @Nullable private final String nestedDiagnosticContext;
   @Nullable private final String type;
+  @Nullable private final String insertId;
 
   LogEntry(
       String message,
@@ -47,7 +48,8 @@ final class LogEntry {
       List<StructuredParameter> parameters,
       Map<String, String> mappedDiagnosticContext,
       @Nullable String nestedDiagnosticContext,
-      @Nullable String type) {
+      @Nullable String type,
+      @Nullable String insertId) {
     this.message = message;
     this.severity = severity;
     this.timestamp = timestamp;
@@ -59,6 +61,7 @@ final class LogEntry {
     this.mappedDiagnosticContext = mappedDiagnosticContext;
     this.nestedDiagnosticContext = nestedDiagnosticContext;
     this.type = type;
+    this.insertId = insertId;
   }
 
   static final class SourceLocation {
@@ -124,6 +127,13 @@ final class LogEntry {
   }
 
   void json(StringBuilder b) {
+
+    if (insertId != null) {
+      b.append("\"logging.googleapis.com/insertId\":");
+      appendEscapedString(b, insertId);
+      b.append(",");
+    }
+
     if (trace != null) {
       b.append("\"logging.googleapis.com/trace\":");
       appendEscapedString(b, trace);
