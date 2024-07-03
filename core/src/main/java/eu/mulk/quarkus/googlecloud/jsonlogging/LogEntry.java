@@ -212,7 +212,7 @@ final class LogEntry {
     b.append("}");
   }
 
-  private void appendJsonObject(StringBuilder b, JsonValue value) {
+  private static void appendJsonObject(StringBuilder b, JsonValue value) {
     switch (value.getValueType()) {
       case ARRAY:
         b.append("[");
