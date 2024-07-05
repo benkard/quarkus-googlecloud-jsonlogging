@@ -10,3 +10,12 @@ License: LGPL-3.0-or-later
 Files: examples/spring-boot/src/main/resources/META-INF/services/*
 Copyright: © 2021 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
 License: GPL-3.0-or-later
+
+Files: renovate.json
+Copyright: © 2022-2023 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+License: LGPL-3.0-or-later
+
+Files: mvnw mvnw.cmd .mvn/wrapper/maven-wrapper.jar .mvn/wrapper/maven-wrapper.properties
+Copyright: Copyright 2013-2022 The Apache Software Foundation
+License: Apache-2.0
+

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2021 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
+// SPDX-FileCopyrightText: © 2024 Matthias Andreas Benkard <code@mail.matthias.benkard.de>
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
