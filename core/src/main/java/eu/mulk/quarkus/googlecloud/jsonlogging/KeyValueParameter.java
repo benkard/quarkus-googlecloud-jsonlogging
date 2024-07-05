@@ -4,9 +4,9 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
-import jakarta.json.Json;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
+import jakarta.json.spi.JsonProvider;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
@@ -40,6 +40,8 @@ import java.util.Objects;
  */
 public final class KeyValueParameter implements StructuredParameter {
 
+  private static final JsonProvider JSON = JsonProvider.provider();
+
   private final String key;
   private final JsonValue value;
 
@@ -58,7 +60,7 @@ public final class KeyValueParameter implements StructuredParameter {
    * @return the newly constructed parameter, ready to be passed to a logging function.
    */
   public static KeyValueParameter of(String key, String value) {
-    return new KeyValueParameter(key, Json.createValue(value));
+    return new KeyValueParameter(key, JSON.createValue(value));
   }
 
   /**
@@ -71,7 +73,7 @@ public final class KeyValueParameter implements StructuredParameter {
    * @return the newly constructed parameter, ready to be passed to a logging function.
    */
   public static KeyValueParameter of(String key, int value) {
-    return new KeyValueParameter(key, Json.createValue(value));
+    return new KeyValueParameter(key, JSON.createValue(value));
   }
 
   /**
@@ -84,7 +86,7 @@ public final class KeyValueParameter implements StructuredParameter {
    * @return the newly constructed parameter, ready to be passed to a logging function.
    */
   public static KeyValueParameter of(String key, long value) {
-    return new KeyValueParameter(key, Json.createValue(value));
+    return new KeyValueParameter(key, JSON.createValue(value));
   }
 
   /**
@@ -97,7 +99,7 @@ public final class KeyValueParameter implements StructuredParameter {
    * @return the newly constructed parameter, ready to be passed to a logging function.
    */
   public static KeyValueParameter of(String key, double value) {
-    return new KeyValueParameter(key, Json.createValue(value));
+    return new KeyValueParameter(key, JSON.createValue(value));
   }
 
   /**
@@ -110,7 +112,7 @@ public final class KeyValueParameter implements StructuredParameter {
    * @return the newly constructed parameter, ready to be passed to a logging function.
    */
   public static KeyValueParameter of(String key, BigDecimal value) {
-    return new KeyValueParameter(key, Json.createValue(value));
+    return new KeyValueParameter(key, JSON.createValue(value));
   }
 
   /**
@@ -123,7 +125,7 @@ public final class KeyValueParameter implements StructuredParameter {
    * @return the newly constructed parameter, ready to be passed to a logging function.
    */
   public static KeyValueParameter of(String key, BigInteger value) {
-    return new KeyValueParameter(key, Json.createValue(value));
+    return new KeyValueParameter(key, JSON.createValue(value));
   }
 
   /**
@@ -141,7 +143,7 @@ public final class KeyValueParameter implements StructuredParameter {
 
   @Override
   public JsonObjectBuilder json() {
-    return Json.createObjectBuilder().add(key, value);
+    return JSON.createObjectBuilder().add(key, value);
   }
 
   /**
