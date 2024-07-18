@@ -5,6 +5,7 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import org.jboss.logmanager.ExtLogRecord;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Contextual data available to {@link StructuredParameterProvider} and {@link LabelProvider}.
@@ -19,7 +20,7 @@ public interface ProviderContext {
    *
    * @return {@link ExtLogRecord#getLoggerName()}.
    */
-  String loggerName();
+  @Nullable String loggerName();
 
   /**
    * The {@link ExtLogRecord#getSequenceNumber()} property of the log record that is being
@@ -34,5 +35,5 @@ public interface ProviderContext {
    *
    * @return {@link ExtLogRecord#getThreadName()}.
    */
-  String threadName();
+  @Nullable String threadName();
 }

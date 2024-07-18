@@ -4,12 +4,12 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
-import io.smallrye.common.constraint.Nullable;
 import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A JSON log entry compatible with Google Cloud Logging.
@@ -27,15 +27,15 @@ final class LogEntry {
   private final String message;
   private final String severity;
   private final Timestamp timestamp;
-  @Nullable private final String trace;
-  @Nullable private final String spanId;
-  @Nullable private final SourceLocation sourceLocation;
+  private final @Nullable String trace;
+  private final @Nullable String spanId;
+  private final @Nullable SourceLocation sourceLocation;
   private final Map<String, String> labels;
   private final List<StructuredParameter> parameters;
   private final Map<String, String> mappedDiagnosticContext;
-  @Nullable private final String nestedDiagnosticContext;
-  @Nullable private final String type;
-  @Nullable private final String insertId;
+  private final @Nullable String nestedDiagnosticContext;
+  private final @Nullable String type;
+  private final @Nullable String insertId;
 
   LogEntry(
       String message,
@@ -66,9 +66,9 @@ final class LogEntry {
 
   static final class SourceLocation {
 
-    @Nullable private final String file;
-    @Nullable private final String line;
-    @Nullable private final String function;
+    private final @Nullable String file;
+    private final @Nullable String line;
+    private final @Nullable String function;
 
     SourceLocation(@Nullable String file, @Nullable String line, @Nullable String function) {
       this.file = file;

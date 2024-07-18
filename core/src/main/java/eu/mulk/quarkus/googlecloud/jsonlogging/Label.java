@@ -5,6 +5,7 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A label usable to tag a log message.
@@ -78,7 +79,7 @@ public final class Label {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (obj == this) return true;
     if (obj == null || obj.getClass() != this.getClass()) return false;
     var that = (Label) obj;

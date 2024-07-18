@@ -198,4 +198,7 @@
  * }
  * }
  */
+@NullMarked
 package eu.mulk.quarkus.googlecloud.jsonlogging;
+
+import org.jspecify.annotations.NullMarked;

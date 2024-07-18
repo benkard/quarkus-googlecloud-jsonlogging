@@ -4,6 +4,8 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * A user-supplied provider for {@link StructuredParameter}s.
  *
@@ -58,7 +60,7 @@ public interface StructuredParameterProvider {
    * @return a {@link StructuredParameter} to add to each log entry that is logged.
    * @see #getParameter(Context)
    */
-  default StructuredParameter getParameter() {
+  default @Nullable StructuredParameter getParameter() {
     return null;
   }
 
@@ -73,7 +75,7 @@ public interface StructuredParameterProvider {
    *
    * @return a {@link StructuredParameter} to add to each log entry that is logged.
    */
-  default StructuredParameter getParameter(Context context) {
+  default @Nullable StructuredParameter getParameter(Context context) {
     return getParameter();
   }
 

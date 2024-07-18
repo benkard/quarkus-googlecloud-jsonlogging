@@ -6,17 +6,13 @@ package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.ServiceLoader.Provider;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import org.jboss.logmanager.ExtFormatter;
 import org.jboss.logmanager.ExtLogRecord;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Formats log records as JSON for consumption by Google Cloud Logging.
@@ -42,7 +38,7 @@ public class Formatter extends ExtFormatter {
 
   private final List<StructuredParameterProvider> parameterProviders;
   private final List<LabelProvider> labelProviders;
-  private final ThreadLocal<StringBuilder> stringBuilder;
+  private final ThreadLocal<@Nullable StringBuilder> stringBuilder;
 
   /**
    * Constructs a {@link Formatter} with custom configuration.
@@ -125,8 +121,9 @@ public class Formatter extends ExtFormatter {
 
     String insertId = null;
 
-    if (logRecord.getParameters() != null) {
-      for (var parameter : logRecord.getParameters()) {
+    var logRecordParameters = logRecord.getParameters();
+    if (logRecordParameters != null) {
+      for (var parameter : logRecordParameters) {
         if (parameter instanceof StructuredParameter) {
           parameters.add((StructuredParameter) parameter);
         } else if (parameter instanceof Label) {
@@ -158,7 +155,7 @@ public class Formatter extends ExtFormatter {
             logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null,
             insertId);
 
-    var b = stringBuilder.get();
+    var b = Objects.requireNonNull(stringBuilder.get());
     b.delete(0, b.length());
     b.append("{");
     entry.json(b);
@@ -166,7 +163,7 @@ public class Formatter extends ExtFormatter {
     return b.toString();
   }
 
-  private static LogEntry.SourceLocation sourceLocationOf(ExtLogRecord logRecord) {
+  private static LogEntry.@Nullable SourceLocation sourceLocationOf(ExtLogRecord logRecord) {
     var sourceFileName = logRecord.getSourceFileName();
     var sourceLineNumber = logRecord.getSourceLineNumber();
     var sourceClassName = logRecord.getSourceClassName();
@@ -191,9 +188,10 @@ public class Formatter extends ExtFormatter {
     var messagePrintWriter = new PrintWriter(messageStringWriter);
     messagePrintWriter.append(this.formatMessage(logRecord));
 
-    if (logRecord.getThrown() != null) {
+    var logRecordThrown = logRecord.getThrown();
+    if (logRecordThrown != null) {
       messagePrintWriter.println();
-      logRecord.getThrown().printStackTrace(messagePrintWriter);
+      logRecordThrown.printStackTrace(messagePrintWriter);
     }
 
     messagePrintWriter.close();
@@ -230,9 +228,9 @@ public class Formatter extends ExtFormatter {
   private static class ProviderContext
       implements LabelProvider.Context, StructuredParameterProvider.Context {
 
-    private final String loggerName;
+    private final @Nullable String loggerName;
     private final long sequenceNumber;
-    private final String threadName;
+    private final @Nullable String threadName;
 
     private ProviderContext(ExtLogRecord logRecord) {
       loggerName = logRecord.getLoggerName();
@@ -241,7 +239,7 @@ public class Formatter extends ExtFormatter {
     }
 
     @Override
-    public String loggerName() {
+    public @Nullable String loggerName() {
       return loggerName;
     }
 
@@ -251,7 +249,7 @@ public class Formatter extends ExtFormatter {
     }
 
     @Override
-    public String threadName() {
+    public @Nullable String threadName() {
       return threadName;
     }
   }

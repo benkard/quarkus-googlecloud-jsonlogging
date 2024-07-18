@@ -10,6 +10,7 @@ import jakarta.json.spi.JsonProvider;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A simple single key–value pair forming a {@link StructuredParameter}.
@@ -168,7 +169,7 @@ public final class KeyValueParameter implements StructuredParameter {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (obj == this) return true;
     if (obj == null || obj.getClass() != this.getClass()) return false;
     var that = (KeyValueParameter) obj;

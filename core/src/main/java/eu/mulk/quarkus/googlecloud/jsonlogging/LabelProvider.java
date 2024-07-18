@@ -5,6 +5,7 @@
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
 import java.util.Collection;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A user-supplied provider for {@link Label}s.
@@ -52,7 +53,7 @@ public interface LabelProvider {
    * @return a collection of {@link Label}s to add to each log entry that is logged.
    * @see #getLabels(Context)
    */
-  default Collection<Label> getLabels() {
+  default @Nullable Collection<Label> getLabels() {
     return null;
   }
 
@@ -63,7 +64,7 @@ public interface LabelProvider {
    *
    * @return a collection of {@link Label}s to add to each log entry that is logged.
    */
-  default Collection<Label> getLabels(Context context) {
+  default @Nullable Collection<Label> getLabels(Context context) {
     return getLabels();
   }
 
