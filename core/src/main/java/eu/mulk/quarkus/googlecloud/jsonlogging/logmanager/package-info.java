@@ -19,4 +19,7 @@
  * when used in conjunction with frameworks other than Quarkus (such as Spring Boot). See the class
  * documentation for details.
  */
+@NullMarked
 package eu.mulk.quarkus.googlecloud.jsonlogging.logmanager;
+
+import org.jspecify.annotations.NullMarked;
