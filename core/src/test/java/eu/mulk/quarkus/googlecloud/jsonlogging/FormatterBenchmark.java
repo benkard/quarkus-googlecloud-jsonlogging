@@ -4,8 +4,11 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging;
 
+import static java.util.logging.Level.FINEST;
+
 import java.util.List;
-import org.jboss.logmanager.ExtLogRecord;
+import java.util.logging.LogRecord;
+import org.jboss.logmanager.formatters.Formatters;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -15,11 +18,14 @@ import org.openjdk.jmh.infra.Blackhole;
 @State(org.openjdk.jmh.annotations.Scope.Benchmark)
 public class FormatterBenchmark {
 
-  private ExtLogRecord simpleLogRecord;
-  private ExtLogRecord structuredLogRecord;
-  private ExtLogRecord massivelyStructuredLogRecord;
-  private ExtLogRecord nestedLogRecord;
-  private Formatter formatter;
+  private static final LogRecord NULL_LOG_RECORD = new LogRecord(FINEST, "");
+  private static final java.util.logging.Formatter NULL_FORMATTER = Formatters.nullFormatter();
+
+  private LogRecord simpleLogRecord = NULL_LOG_RECORD;
+  private LogRecord structuredLogRecord = NULL_LOG_RECORD;
+  private LogRecord massivelyStructuredLogRecord = NULL_LOG_RECORD;
+  private LogRecord nestedLogRecord = NULL_LOG_RECORD;
+  private java.util.logging.Formatter formatter = NULL_FORMATTER;
 
   @Setup
   public void setup() {
