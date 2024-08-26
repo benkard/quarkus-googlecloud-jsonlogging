@@ -4,19 +4,24 @@
 
 package eu.mulk.quarkus.googlecloud.jsonlogging.runtime;
 
-import io.quarkus.runtime.annotations.ConfigItem;
-import io.quarkus.runtime.annotations.ConfigPhase;
+import static io.quarkus.runtime.annotations.ConfigPhase.RUN_TIME;
+
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
+import io.smallrye.config.WithParentName;
 
 /** Configuration for console logging in Google Cloud Logging JSON format. */
-@ConfigRoot(prefix = "quarkus.log.console", name = "google", phase = ConfigPhase.RUN_TIME)
-public class GoogleCloudJsonLoggingConfiguration {
+@ConfigMapping(prefix = "quarkus.log.console.google")
+@ConfigRoot(phase = RUN_TIME)
+public interface GoogleCloudJsonLoggingConfiguration {
 
   /**
    * Whether to enable Google Cloud Logging JSON logging to <code>stdout</code>/<code>stderr</code>.
    *
    * <p>Replaces the regular plain-text format for console logs.
    */
-  @ConfigItem(defaultValue = "true", name = ConfigItem.PARENT)
-  public boolean enabled;
+  @WithDefault("true")
+  @WithParentName
+  boolean enabled();
 }

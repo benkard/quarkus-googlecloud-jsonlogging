@@ -28,7 +28,7 @@ public class GoogleCloudJsonLoggingRecorder {
    */
   public RuntimeValue<Optional<java.util.logging.Formatter>> initialize(
       GoogleCloudJsonLoggingConfiguration configuration) {
-    if (!configuration.enabled) {
+    if (!configuration.enabled()) {
       return new RuntimeValue<>(Optional.empty());
     }
 
