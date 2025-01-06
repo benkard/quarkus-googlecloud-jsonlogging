@@ -69,7 +69,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <nexus-staging-plugin.version>1.7.0</nexus-staging-plugin.version>
-    <spotless-plugin.version>2.43.0</spotless-plugin.version>
+    <spotless-plugin.version>2.44.0</spotless-plugin.version>
     <surefire-plugin.version>3.5.2</surefire-plugin.version>
 
     <quarkus.version>3.17.5</quarkus.version>
