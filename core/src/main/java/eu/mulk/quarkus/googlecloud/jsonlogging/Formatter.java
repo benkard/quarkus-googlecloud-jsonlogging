@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 import org.jboss.logmanager.ExtFormatter;
 import org.jboss.logmanager.ExtLogRecord;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -155,7 +156,7 @@ public class Formatter extends ExtFormatter {
             logRecord.getLevel().intValue() >= 1000 ? ERROR_EVENT_TYPE : null,
             insertId);
 
-    var b = Objects.requireNonNull(stringBuilder.get());
+    var b = (@NonNull StringBuilder) stringBuilder.get();
     b.delete(0, b.length());
     b.append("{");
     entry.json(b);
