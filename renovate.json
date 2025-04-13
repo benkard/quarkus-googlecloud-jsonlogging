@@ -3,4 +3,7 @@
   [ "local>mulk/renovate-config"
   , ":automergeMinor"
   ]
+, "ignoreDeps":
+  [ "org.jboss.logmanager:jboss-logmanager-embedded"
+  ]
 }

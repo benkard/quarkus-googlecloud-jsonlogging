@@ -23,6 +23,11 @@ SPDX-License-Identifier: LGPL-3.0-or-later
   <dependencies>
     <dependency>
       <groupId>org.jboss.logmanager</groupId>
+      <artifactId>jboss-logmanager-embedded</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.logmanager</groupId>
       <artifactId>jboss-logmanager</artifactId>
       <version>3.1.2.Final</version>
       <optional>true</optional>

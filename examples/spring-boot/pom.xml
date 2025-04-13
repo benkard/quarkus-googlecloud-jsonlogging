@@ -67,7 +67,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
     <dependency>
       <groupId>org.jboss.logmanager</groupId>
       <artifactId>jboss-logmanager</artifactId>
-      <version>3.1.2.Final</version>
+      <version>3.0.2.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.logmanager</groupId>
+      <artifactId>jboss-logmanager-embedded</artifactId>
+      <version>1.2.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

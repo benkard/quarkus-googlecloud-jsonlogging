@@ -131,7 +131,7 @@ If you are using Maven:
   <dependency>
     <groupId>org.jboss.logmanager</groupId>
     <artifactId>jboss-logmanager</artifactId>
-    <version>3.1.2.Final</version>
+    <version>3.0.2.Final</version>
   </dependency>
 
 </dependencies>
@@ -143,7 +143,7 @@ If you are using Gradle:
 ----
 dependencies {
   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:7.0.0")
-  implementation("org.jboss.logmanager:jboss-logmanager:3.1.2.Final")
+  implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
 }
 ----
 
@@ -198,7 +198,13 @@ If you are using Maven:
     <dependency>
       <groupId>org.jboss.logmanager</groupId>
       <artifactId>jboss-logmanager</artifactId>
-      <version>3.1.2.Final</version>
+      <version>3.0.2.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.logmanager</groupId>
+      <artifactId>jboss-logmanager-embedded</artifactId>
+      <version>1.2.0.Final</version>
     </dependency>
 
     <dependency>
@@ -244,7 +250,8 @@ configurations {
 
 dependencies {
   implementation("eu.mulk.quarkus-googlecloud-jsonlogging:quarkus-googlecloud-jsonlogging-core:7.0.0")
-  implementation("org.jboss.logmanager:jboss-logmanager:3.1.2.Final")
+  implementation("org.jboss.logmanager:jboss-logmanager:3.0.2.Final")
+  implementation("org.jboss.logmanager:jboss-logmanager-embedded:1.2.0.Final")
   implementation("org.jboss.slf4j:slf4j-jboss-logmanager:2.0.1.Final")
 }
 
