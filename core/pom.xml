@@ -45,7 +45,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <dependency>
       <groupId>io.github.eisop</groupId>
       <artifactId>checker-qual</artifactId>
-      <version>3.49.1-eisop1</version>
+      <version>3.49.3-eisop1</version>
       <scope>provided</scope>
     </dependency>
 
@@ -99,7 +99,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
             <path>
               <groupId>io.github.eisop</groupId>
               <artifactId>checker</artifactId>
-              <version>3.49.1-eisop1</version>
+              <version>3.49.3-eisop1</version>
             </path>
           </annotationProcessorPaths>
           <annotationProcessors>
