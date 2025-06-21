@@ -63,7 +63,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <compiler-plugin.version>3.14.0</compiler-plugin.version>
     <exec-maven-plugin.version>3.5.1</exec-maven-plugin.version>
     <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
-    <flatten-plugin.version>1.7.0</flatten-plugin.version>
+    <flatten-plugin.version>1.7.1</flatten-plugin.version>
     <jar-plugin.version>3.4.2</jar-plugin.version>
     <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
     <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
