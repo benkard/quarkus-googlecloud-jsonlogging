@@ -18,6 +18,13 @@ import java.util.stream.Collectors;
 @Recorder
 public class GoogleCloudJsonLoggingRecorder {
 
+  private final RuntimeValue<GoogleCloudJsonLoggingConfiguration> configuration;
+
+  public GoogleCloudJsonLoggingRecorder(
+      RuntimeValue<GoogleCloudJsonLoggingConfiguration> configuration) {
+    this.configuration = configuration;
+  }
+
   /**
    * Registers {@link Formatter} as a log formatter for the application.
    *
@@ -26,9 +33,8 @@ public class GoogleCloudJsonLoggingRecorder {
    *
    * @return the registered {@link Formatter}.
    */
-  public RuntimeValue<Optional<java.util.logging.Formatter>> initialize(
-      GoogleCloudJsonLoggingConfiguration configuration) {
-    if (!configuration.enabled()) {
+  public RuntimeValue<Optional<java.util.logging.Formatter>> initialize() {
+    if (!configuration.getValue().enabled()) {
       return new RuntimeValue<>(Optional.empty());
     }
 
